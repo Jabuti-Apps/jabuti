@@ -1,21 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-from cars.models import Carro, Motorista
+from cars.models import Veiculo
 
-
+def cars(request):
+    veiculos = Veiculo.objects.all()
+    return render(request, "index.html", {"veiculos": veiculos})
 
 def car_detail(request, pk):
-
-    owner_obj = Motorista.objects.get(pk=pk)
-
-    car_objs = Carro.objects.filter(proprietario_id=owner_obj.id)
+    car_objs = get_object_or_404(Veiculo, pk=pk)
 
     context = {
-
-        "vehicles": car_objs,
-
-        "drivers": owner_obj,
-
+        "veiculo": car_objs,
     }
-
     return render(request, "car_detail.html", context)

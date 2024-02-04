@@ -2,31 +2,28 @@
 
 {% block page_content %}
 
-        <div class="mw6 center pa3 sans-serif">
+    <div class="mw6 center pa3 sans-serif">
 
-            <h1 class="mb4">Motorista: {{ drivers.nome | linebreaks }}</h1>
+        <div class="pa2 mb3 striped--near-white">
 
-            <header class="b mb2">CNH: {{ drivers.cnh }}</header>
+            <div class="pl2">
 
-        {% for v in vehicles %}
-
-            <div class="pa2 mb3 striped--near-white">
-
-                <div class="pl2">
-
-                    <p class="mb2">Marca/Modelo: {{ v.marca }} {{ v.modelo }}</p>
-
-                    <p class="mb2">Ano: {{ v.ano }}</p>
-
-                    <p class="mb2">Vin: {{ v.vin }}</p>
-
-                </div>
+                <p class="mb2">Id: {{ veiculo.id }}</p>
+                <p class="mb2">Marca/Modelo: {{ veiculo.marca }} {{ veiculo.modelo }}</p>
+                <p class="mb2">Ano: {{ veiculo.anoDeFabricacao }}</p>
+                <p class="mb2">CRV: {{ veiculo.crv }}</p>
+                <p class="mb2">Cor: {{ veiculo.cor }}</p>
+                <p class="mb2">Placa: {{ veiculo.placa }}</p>
+                <p class="mb2">Quilometragem: {{ veiculo.quilometragem }}</p>
+                <p class="mb2">Disponivel: {{ veiculo.estaDisponivel }}</p>
+                <p class="mb2">Gasolina: {{ veiculo.precisaAbastecer }}</p>
+                <p class="mb2">Seguro: {{ veiculo.temSeguro }}</p>
+                <p class="mb2">Alugado: {{ veiculo.alugado }}</p>
 
             </div>
 
-        {% endfor %}
-
         </div>
 
-{% endblock %}
+    </div>
 
+{% endblock %}

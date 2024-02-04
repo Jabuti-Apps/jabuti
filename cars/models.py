@@ -1,19 +1,35 @@
 from django.db import models
 
-class Motorista(models.Model):
+class Veiculo(models.Model):
 
-    nome = models.TextField()
+    crv = models.BigIntegerField()
 
-    cnh = models.TextField()
+    cor = models.TextField()
 
-class Carro(models.Model):
+    placa = models.TextField()
 
     marca = models.TextField()
 
     modelo = models.TextField()
 
-    ano = models.IntegerField()
+    anoDeFabricacao = models.IntegerField()
 
-    vin = models.TextField()
+    tipoDeCombustivel = models.TextField()
 
-    proprietario = models.ForeignKey("Motorista", on_delete=models.SET_NULL, null=True)
+    capacidadeCombustivel = models.IntegerField()
+
+    quilometragem = models.FloatField()
+
+    estaDisponivel = models.BooleanField(default=True)
+
+    precisaAbastecer = models.BooleanField(default=False)
+
+    precisaDeManutencao = models.BooleanField(default=False)
+
+    temSeguro  = models.BooleanField(default=False)
+
+    alugado  = models.BooleanField(default=False)
+
+    #orgao int [ref: > orgao.id]
+
+    criadoEm = models.DateTimeField(auto_now_add=True)
