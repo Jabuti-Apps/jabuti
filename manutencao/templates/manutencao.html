@@ -1,0 +1,26 @@
+<!-- manutencao.html -->
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<div class="mw6 center pa3 sans-serif">
+    <h1>Manutenções </h1>
+    {% for manutencao in manutencoes %}
+    <div class="pa2 mb3 striped--near-white">
+        <div class="pl2">
+            <p class="mb2">Id: {{ manutencao.id }}</p>
+            <p class="mb2">Veiculo: {{ manutencao.veiculo.placa }}</p>
+            <p class="mb2">Tipo de Manutencao: {{ manutencao.tipoManutencao }}</p>
+
+            {% if manutencao.tipoManutencao == "Outro" %}
+                <p class="mb2">- {{ manutencao.outraOpcao }}</p>
+            {% endif %}
+
+            <p class="mb2">Quilometragem: {{ manutencao.quilometragemDoVeiculo }}</p>
+            <p class="mb2">Data: {{ manutencao.data }}</p>
+            
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -9,4 +9,6 @@ urlpatterns = [
 
     path("cars/", include("cars.urls")),
 
+    path("manutencao/", include("manutencao.urls")),
+
 ]

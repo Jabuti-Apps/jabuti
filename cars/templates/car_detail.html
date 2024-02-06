@@ -1,29 +1,42 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-
-    <div class="mw6 center pa3 sans-serif">
-
-        <div class="pa2 mb3 striped--near-white">
-
-            <div class="pl2">
-
-                <p class="mb2">Id: {{ veiculo.id }}</p>
-                <p class="mb2">Marca/Modelo: {{ veiculo.marca }} {{ veiculo.modelo }}</p>
-                <p class="mb2">Ano: {{ veiculo.anoDeFabricacao }}</p>
-                <p class="mb2">CRV: {{ veiculo.crv }}</p>
-                <p class="mb2">Cor: {{ veiculo.cor }}</p>
-                <p class="mb2">Placa: {{ veiculo.placa }}</p>
-                <p class="mb2">Quilometragem: {{ veiculo.quilometragem }}</p>
-                <p class="mb2">Disponivel: {{ veiculo.estaDisponivel }}</p>
-                <p class="mb2">Gasolina: {{ veiculo.precisaAbastecer }}</p>
-                <p class="mb2">Seguro: {{ veiculo.temSeguro }}</p>
-                <p class="mb2">Alugado: {{ veiculo.alugado }}</p>
-
-            </div>
-
+<div class="mw6 center pa3 sans-serif">
+    <h1> Detalhes Do Carro </h1>
+    <div class="pa2 mb3 striped--near-white">
+        <div class="pl2">
+            <p class="mb2">Id: {{ veiculo.id }}</p>
+            <p class="mb2">Marca/Modelo: {{ veiculo.marca }} {{ veiculo.modelo }}</p>
+            <p class="mb2">Ano: {{ veiculo.anoDeFabricacao }}</p>
+            <p class="mb2">CRV: {{ veiculo.crv }}</p>
+            <p class="mb2">Cor: {{ veiculo.cor }}</p>
+            <p class="mb2">Placa: {{ veiculo.placa }}</p>
+            <p class="mb2">Quilometragem: {{ veiculo.quilometragem }}</p>
+            <p class="mb2">Disponivel: {{ veiculo.estaDisponivel }}</p>
+            <p class="mb2">Gasolina: {{ veiculo.precisaAbastecer }}</p>
+            <p class="mb2">Seguro: {{ veiculo.temSeguro }}</p>
+            <p class="mb2">Alugado: {{ veiculo.alugado }}</p>
         </div>
-
     </div>
-
+    <br>
+    <h2>Manutenções</h2>
+    <div class="mw6 center pa3 sans-serif">
+        {% if manutencoes %}
+            {% for manutencao in manutencoes %}
+                <div class="pa2 mb3 striped--near-white">
+                    <div class="pl2">
+                        <p class="mb2">Tipo de Manutenção: {{ manutencao.tipoManutencao }}</p>
+                        {% if manutencao.tipoManutencao == "Outro" %}
+                            <p class="mb2">- {{ manutencao.outraOpcao }}</p>
+                        {% endif %}
+                        <p class="mb2">Data: {{ manutencao.data }}</p>
+                        <p class="mb2">Quilometragem: {{ manutencao.quilometragemDoVeiculo }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Sem manutenções.</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

@@ -1,36 +1,22 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-
-        <div class="mw6 center pa3 sans-serif">
+    <div class="mw6 center pa3 sans-serif">
+        <h1> Veiculos </h1>
+        <a href="{% url 'disponiveis' %}"><button>Mostrar Carros Disponíveis</button></a><br>
 
         {% for veiculo in veiculos %}
-
             <div class="pa2 mb3 striped--near-white">
-
                 <div class="pl2">
-
-                    <a href="{% url 'car_detail' pk=veiculo.id %}">
-
+                    <a href="{% url 'car_detail' id=veiculo.id %}">
                         <p class="mb2">Id: {{ veiculo.id}}</p>
-
                         <p class="mb2">Marca/Modelo: {{ veiculo.marca }} {{ veiculo.modelo }}</p>
-
                         <p class="mb2">Cor: {{ veiculo.cor }}</p>
-
                         <p class="mb2">Placa: {{ veiculo.placa}}</p>
-
                         <p class="mb2">Disponivel: {{ veiculo.estaDisponivel }}</p>
-
                     </a>
-
                 </div>
-
             </div>
-
         {% endfor %}
-
-        </div>
-
+    </div>
 {% endblock %}
-
