@@ -1,6 +1,6 @@
 from django.db import models
 
-from cars.models import Veiculo  # Importa o modelo Veiculo do aplicativo cars
+from veiculos.models import Veiculo  # Importa o modelo Veiculo do aplicativo veiculos
 
 class Manutencao(models.Model):
 

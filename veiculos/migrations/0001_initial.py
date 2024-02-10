@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('model', models.TextField()),
                 ('year', models.IntegerField()),
                 ('vin', models.TextField()),
-                ('owner', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='cars.driver')),
+                ('owner', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='veiculos.driver')),
             ],
         ),
     ]

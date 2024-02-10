@@ -1,10 +1,12 @@
-<!-- manutencao.html -->
 {% extends "base.html" %}
 
 {% block page_content %}
 
 <div class="mw6 center pa3 sans-serif">
-    <h1>Manutenções </h1>
+    <div class="justify-content-between align-items-center">
+        <h1 style="display: inline-block;">Manutenções</h1>
+        <a href="{% url 'criar_manutencao' %}" class="btn btn-primary" style="margin-left: 80px;">Criar Manutenção</a>
+    </div>
     {% for manutencao in manutencoes %}
     <div class="pa2 mb3 striped--near-white">
         <div class="pl2">

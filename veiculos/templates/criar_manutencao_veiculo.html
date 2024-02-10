@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+<div class="mw6 center pa3 sans-serif">
+<h1>Criar manutencao</h1>
+    <form method="post" >
+        {% csrf_token %}
+        <label for="id_tipo_manutencao">Tipo de Manutenção:</label>
+        <select name="tipo_manutencao" id="id_tipo_manutencao">
+            <option value="Troca de Oleo">Troca de Óleo</option>
+            <option value="Troca de Pneu">Troca de Pneu</option>
+            <option value="Troca Kit de Freio">Troca Kit de Freio</option>
+            <option value="Limpeza do radiador">Limpeza do radiador</option>
+            <option value="Outro">Outro</option>
+        </select><br><br>
+
+        <label for="id_outra_opcao">Outra Opção:</label>
+        <input type="text" name="outra_opcao" id="id_outra_opcao"><br><br>
+
+        <label for="id_quilometragem">Quilometragem:</label>
+        <input type="number" name="quilometragem" id="id_quilometragem"><br><br>
+
+        <label for="id_data">Data:</label>
+        <input type="date" name="data" id="id_data"><br><br>
+
+        <input type="submit" value="Solicitar Manutenção">
+    </form>
+</div>
+{% endblock %}

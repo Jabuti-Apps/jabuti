@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cars', '0001_initial'),
+        ('veiculos', '0001_initial'),
     ]
 
     operations = [
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('modelo', models.TextField()),
                 ('ano', models.IntegerField()),
                 ('vin', models.TextField()),
-                ('proprietario', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='cars.motorista')),
+                ('proprietario', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='veiculos.motorista')),
             ],
         ),
         migrations.DeleteModel(

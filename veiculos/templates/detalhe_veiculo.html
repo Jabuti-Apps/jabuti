@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block page_content %}
+{% if messages %}
+<ul class="messages; cor:red">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <div class="mw6 center pa3 sans-serif">
     <h1> Detalhes Do Carro </h1>
     <div class="pa2 mb3 striped--near-white">
@@ -16,10 +23,20 @@
             <p class="mb2">Gasolina: {{ veiculo.precisaAbastecer }}</p>
             <p class="mb2">Seguro: {{ veiculo.temSeguro }}</p>
             <p class="mb2">Alugado: {{ veiculo.alugado }}</p>
+            <p class="mb2">Precisa de Manutenção: {{ veiculo.precisaDeManutencao }} </p> <br>
+
+            {% if not veiculo.precisaDeManutencao %}
+                <form action="{% url 'solicitar_manutencao' veiculo.id %}" method="post" style="display: inline-block; margin-left: 80px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Solicitar Manutenção</button>
+                </form>
+            {% endif %}
         </div>
     </div>
-    <br>
-    <h2>Manutenções</h2>
+    <div class="justify-content-between align-items-center">
+        <h2 style="display: inline-block;">Manutenções</h2>
+        <a href="{% url 'criar_manutencao_veiculo' veiculo.id %}" class="btn btn-primary" style="margin-left: 80px;">Criar Manutenção</a>
+    </div>
     <div class="mw6 center pa3 sans-serif">
         {% if manutencoes %}
             {% for manutencao in manutencoes %}

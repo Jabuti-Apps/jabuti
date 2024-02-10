@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('cars', '0004_alter_veiculo_crv_alter_veiculo_placa'),
+        ('veiculos', '0004_alter_veiculo_crv_alter_veiculo_placa'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('quilometragemDoVeiculo', models.FloatField()),
                 ('data', models.DateField()),
                 ('criadoEm', models.DateTimeField(auto_now_add=True)),
-                ('veiculo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cars.veiculo')),
+                ('veiculo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='veiculos.veiculo')),
             ],
         ),
     ]
