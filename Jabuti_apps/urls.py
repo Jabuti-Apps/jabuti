@@ -11,4 +11,5 @@ urlpatterns = [
 
     path("manutencao/", include("manutencao.urls")),
 
+    path("autorizacao/", include("autorizacao.urls")),
 ]
