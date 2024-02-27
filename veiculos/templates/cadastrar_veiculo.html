@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <div class="mw6 center pa3 sans-serif">
+        <h1>Criar Veiculo</h1>
+
+        <form method="post" >
+            {% csrf_token %}
+            <label for="crv">Crv:</label>
+            <input type="number" name="crv"><br><br>
+
+            <label for="marca">Marca:</label>
+            <input type="text" name="marca"><br><br>
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" name="modelo" ><br><br>
+
+            <label for="cor">Cor:</label>
+            <input type="text" name="cor" ><br><br>
+ 
+            <label for="placa">Placa:</label>
+            <input type="text" name="placa"><br><br>
+
+            <label for="anoDeFabricacao">Ano de fabricação:</label>
+            <input type="number" name="anoDeFabricacao"><br><br>
+
+            <label for="capacidadeCombustivel">Capacidade Combustivel:</label>
+            <input type="number" name="capacidadeCombustivel"><br><br>
+
+            <label for="quilometragem">Quilometragem:</label>
+            <input type="number" name="quilometragem"><br><br>
+
+            <label for="temSeguro">Tem Seguro:</label>
+            <input type="radio" name="temSeguro" value="1"> Sim
+            <input type="radio" name="temSeguro" value="0"> Não<br><br>
+            
+            <label for="alugado">Alugado:</label>
+            <input type="radio" name="alugado" value="1"> Sim
+            <input type="radio" name="alugado" value="0"> Não<br><br>                    
+
+            <label for="tipoDeCombustivel">Tipo de Combustivel:</label>
+            <select name="tipoDeCombustivel">
+                <option value="Gasolina">Gasolina</option>
+                <option value="Gasolina/Alcool">Gasolina/Alcool</option>
+                <option value="Diesel">Diesel</option>
+                <option value="DieselS10">DieselS10</option>
+                <option value="Etanol">Etanol</option>
+            </select><br><br>
+
+            <input type="submit" value="Cadastrar veiculo">
+        </form>
+    </div>
+{% endblock %}

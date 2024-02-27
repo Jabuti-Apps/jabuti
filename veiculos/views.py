@@ -5,8 +5,13 @@ from veiculos.models import Veiculo
 from manutencao.models import Manutencao
 
 def veiculos(request):
-    veiculos = Veiculo.objects.all().order_by('id')
-    return render(request, "index.html", {"veiculos": veiculos})
+    mostrar_disponiveis = request.GET.get('mostrar_disponiveis')
+    if mostrar_disponiveis:
+        veiculos = Veiculo.objects.filter(estaDisponivel=True)
+    else:
+        veiculos = Veiculo.objects.all().order_by('id')
+    return render(request, "index.html", {"veiculos": veiculos, 'mostrar_disponiveis': mostrar_disponiveis})
+
 
 def detalhe_veiculo(request, veiculo_id):
     car_obj = get_object_or_404(Veiculo, id=veiculo_id)
@@ -18,9 +23,77 @@ def detalhe_veiculo(request, veiculo_id):
     }
     return render(request, "detalhe_veiculo.html", context)
 
-def disponiveis(request):
-    veiculos_disponiveis = Veiculo.objects.filter(estaDisponivel=True)
-    return render(request, 'index.html', {'veiculos': veiculos_disponiveis})
+def cadastrar_veiculo(request):
+    if request.method == 'POST':
+        crv = request.POST.get('crv')
+        marca = request.POST.get('marca')
+        modelo = request.POST.get('modelo') 
+        cor = request.POST.get('cor')
+        placa = request.POST.get('placa')
+        anoDeFabricacao = request.POST.get('anoDeFabricacao')
+        capacidadeCombustivel = request.POST.get('capacidadeCombustivel')
+        tipoDeCombustivel = request.POST.get('tipoDeCombustivel')
+        quilometragem = request.POST.get('quilometragem')
+        temSeguro = request.POST.get('temSeguro')
+        alugado = request.POST.get('alugado')
+
+        Veiculo.objects.create(
+            crv=crv,
+            marca = marca,
+            modelo =modelo,
+            cor=cor,
+            placa=placa,
+            anoDeFabricacao=anoDeFabricacao,
+            capacidadeCombustivel= capacidadeCombustivel,
+            tipoDeCombustivel=tipoDeCombustivel,
+            quilometragem=quilometragem,
+            temSeguro=temSeguro,
+            alugado=alugado
+        )
+
+        return redirect('veiculos')
+    
+    return render(request, 'cadastrar_veiculo.html')
+
+def editar_veiculo(request, veiculo_id):
+    veiculo = get_object_or_404(Veiculo, id=veiculo_id)
+    return render(request, 'update.html', {"veiculo":veiculo})
+
+def update_veiculo(request, veiculo_id):
+    if request.method == 'POST':
+        vcrv = request.POST.get('crv')
+        vmarca = request.POST.get('marca')
+        vmodelo = request.POST.get('modelo') 
+        vcor = request.POST.get('cor')
+        vplaca = request.POST.get('placa')
+        vanoDeFabricacao = request.POST.get('anoDeFabricacao')
+        vcapacidadeCombustivel = request.POST.get('capacidadeCombustivel')
+        vtipoDeCombustivel = request.POST.get('tipoDeCombustivel')
+        vquilometragem = request.POST.get('quilometragem')
+        vtemSeguro = request.POST.get('temSeguro')
+        valugado = request.POST.get('alugado')
+
+    veiculo = Veiculo.objects.get(id=veiculo_id)
+    
+    veiculo.crv = vcrv
+    veiculo.marca = vmarca
+    veiculo.modelo = vmodelo
+    veiculo.cor = vcor
+    veiculo.placa = vplaca
+    veiculo.anoDeFabricacao = vanoDeFabricacao
+    veiculo.capacidadeCombustivel = vcapacidadeCombustivel
+    veiculo.tipoDeCombustivel = vtipoDeCombustivel
+    veiculo.quilometragem = vquilometragem
+    veiculo.temSeguro = vtemSeguro
+    veiculo.alugado = valugado
+
+    veiculo.save()
+    return redirect('veiculos')
+
+def deletar_veiculo(request, veiculo_id):
+    veiculo = Veiculo.objects.get(id=veiculo_id)
+    veiculo.delete()
+    return redirect('veiculos')
 
 def solicitar_manutencao(request, veiculo_id):
     if request.method == 'POST':

@@ -2,7 +2,12 @@
 
 {% block page_content %}
     <div class="mw6 center pa3 sans-serif">
-        <a href="{% url 'disponiveis' %}"><button>Mostrar Carros Disponíveis</button></a>
+        <form action="{% url 'veiculos' %}" method="GET">
+            <input type="checkbox" name="mostrar_disponiveis" id="mostrar_disponiveis" {% if mostrar_disponiveis %}checked{% endif %}>
+            <label for="mostrar_disponiveis">Mostrar Carros Disponíveis</label>          
+            <button type="submit">Filtrar</button>
+        </form>
+        <br><a href="{% url 'cadastrar_veiculo' %}"><button>Cadastrar Veiculo</button></a><br><br>
 
         {% for veiculo in veiculos %}
             <div class="pa2 mb3 striped--near-white">
@@ -15,6 +20,8 @@
                         <p class="mb2">Disponivel: {{ veiculo.estaDisponivel }}</p>
                         <p class="mb2">Precisa de Manutenção: {{ veiculo.precisaDeManutencao }}</p>
                     </a>
+                    <br><a href="{% url 'editar_veiculo' veiculo.id %}"><button>Editar</button></a>
+                    <a href="{% url 'deletar_veiculo' veiculo.id %}"><button>Deletar</button></a>
                 </div>
             </div>
         {% endfor %}

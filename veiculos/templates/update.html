@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<div class="mw6 center pa3 sans-serif">
+    <h1> Editar Carro </h1>
+    <div class="pa2 mb3 striped--near-white">
+        <form action= "{% url 'update_veiculo' veiculo.id%}" method="POST">
+            {% csrf_token %}
+            <label for="crv">Crv:</label>
+            <input type="number" name="crv" value="{{veiculo.crv}}"><br><br>
+
+            <label for="marca">Marca:</label>
+            <input type="text" name="marca" value="{{veiculo.marca}}"><br><br>
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" name="modelo" value="{{veiculo.modelo}}"><br><br>
+
+            <label for="cor">Cor:</label>
+            <input type="text" name="cor" value="{{veiculo.cor}}"><br><br>
+ 
+            <label for="placa">Placa:</label>
+            <input type="text" name="placa" value="{{veiculo.placa}}"><br><br>
+
+            <label for="anoDeFabricacao">Ano de fabricação:</label>
+            <input type="number" name="anoDeFabricacao" value="{{veiculo.anoDeFabricacao}}"><br><br>
+
+            <label for="capacidadeCombustivel">Capacidade Combustivel:</label>
+            <input type="number" name="capacidadeCombustivel" value="{{veiculo.capacidadeCombustivel}}"><br><br>
+
+            <label for="quilometragem">Quilometragem:</label>
+            <input type="number" name="quilometragem" value="{{veiculo.quilometragem}}"><br><br>
+
+            <label for="temSeguro">Tem Seguro:</label>
+            <input type="radio" name="temSeguro" value="1" {% if veiculo.temSeguro %} checked {% endif %}> Sim
+            <input type="radio" name="temSeguro" value="0" {% if not veiculo.temSeguro %} checked {% endif %}> Não<br><br>
+            
+            <label for="alugado">Alugado:</label>
+            <input type="radio" name="alugado" value="1" {% if veiculo.alugado %} checked {% endif %}> Sim
+            <input type="radio" name="alugado" value="0" {% if not veiculo.alugado %} checked {% endif %}> Não<br><br>                                          
+                           
+            <label for="tipoDeCombustivel">Tipo de Combustivel:</label>
+            <select name="tipoDeCombustivel">
+                <option value="Gasolina" {% if veiculo.tipoDeCombustivel == 'Gasolina' %} selected {% endif %}>Gasolina</option>
+                <option value="Gasolina/Alcool" {% if veiculo.tipoDeCombustivel == 'Gasolina/Alcool' %} selected {% endif %}>Gasolina/Alcool</option>
+                <option value="Diesel" {% if veiculo.tipoDeCombustivel == 'Diesel' %} selected {% endif %}>Diesel</option>
+                <option value="DieselS10" {% if veiculo.tipoDeCombustivel == 'DieselS10' %} selected {% endif %}>DieselS10</option>
+                <option value="Etanol" {% if veiculo.tipoDeCombustivel == 'Etanol' %} selected {% endif %}>Etanol</option>
+            </select><br><br>            
+
+            <input type="submit" value="Salvar alterações">
+        </form>
+    </div>
+</div>
+{% endblock %}
