@@ -1,29 +1,54 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block page_content %}
-    <div class="mw6 center pa3 sans-serif">
-        <form action="{% url 'veiculos' %}" method="GET">
-            <input type="checkbox" name="mostrar_disponiveis" id="mostrar_disponiveis" {% if mostrar_disponiveis %}checked{% endif %}>
-            <label for="mostrar_disponiveis">Mostrar Carros Disponíveis</label>          
-            <button type="submit">Filtrar</button>
-        </form>
-        <br><a href="{% url 'cadastrar_veiculo' %}"><button>Cadastrar Veiculo</button></a><br><br>
-
-        {% for veiculo in veiculos %}
-            <div class="pa2 mb3 striped--near-white">
-                <div class="pl2">
-                    <a href="{% url 'detalhe_veiculo' veiculo.id %}">
-                        <p class="mb2">Id: {{ veiculo.id}}</p>
-                        <p class="mb2">Marca/Modelo: {{ veiculo.marca }} {{ veiculo.modelo }}</p>
-                        <p class="mb2">Cor: {{ veiculo.cor }}</p>
-                        <p class="mb2">Placa: {{ veiculo.placa}}</p>
-                        <p class="mb2">Disponivel: {{ veiculo.estaDisponivel }}</p>
-                        <p class="mb2">Precisa de Manutenção: {{ veiculo.precisaDeManutencao }}</p>
-                    </a>
-                    <br><a href="{% url 'editar_veiculo' veiculo.id %}"><button>Editar</button></a>
-                    <a href="{% url 'deletar_veiculo' veiculo.id %}"><button>Deletar</button></a>
+{% block content %}
+    
+        
+            <main class="w-full flex-grow p-6">
+                <h1 class="text-3xl text-black pb-6">Veículos</h1>
+                <a href="{% url 'cadastrar_veiculo' %}" class="flex items-center justify-center w-64 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg  hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>    
+                    <span>Adicionar Veiculo</span>
+                </a>
+                
+                <div class="w-full mt-12"> 
+                    <div class="bg-white overflow-auto">
+                        <table class="text-left w-full border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">ID</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Marca/Modelo</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Cor</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Placa</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Disponível</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Manutenção</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for veiculo in veiculos %}
+                                <tr class="hover:bg-grey-lighter">
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.id }}</td>
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.marca }} {{ veiculo.modelo }}</td>
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.cor }}</td>
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.placa }}</td>
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.estaDisponivel }}</td>
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.precisaDeManutencao }}</td>
+                                    <td class="py-4 px-6 border-b border-grey-light">
+                                        <a href="{% url 'detalhe_veiculo' veiculo.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark"><button>Detalhes</button></a>
+                                        <a href="{% url 'editar_veiculo' veiculo.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark"><button>Editar</button></a>
+                                        <a href="{% url 'deletar_veiculo' veiculo.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-red hover:bg-red-dark"><button>Deletar</button></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="pt-3 text-gray-600">
+                        Source: <a class="underline" href="https://tailwindcomponents.com/component/table">https://tailwindcomponents.com/component/table</a>
+                    </p>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
+            </main>
+  
 {% endblock %}

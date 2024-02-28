@@ -5,13 +5,9 @@ from veiculos.models import Veiculo
 from manutencao.models import Manutencao
 
 def veiculos(request):
-    mostrar_disponiveis = request.GET.get('mostrar_disponiveis')
-    if mostrar_disponiveis:
-        veiculos = Veiculo.objects.filter(estaDisponivel=True)
-    else:
-        veiculos = Veiculo.objects.all().order_by('id')
-    return render(request, "index.html", {"veiculos": veiculos, 'mostrar_disponiveis': mostrar_disponiveis})
-
+    veiculos = Veiculo.objects.all().order_by('id')
+    
+    return render(request,"index.html", {"veiculos": veiculos,})
 
 def detalhe_veiculo(request, veiculo_id):
     car_obj = get_object_or_404(Veiculo, id=veiculo_id)
@@ -57,7 +53,7 @@ def cadastrar_veiculo(request):
 
 def editar_veiculo(request, veiculo_id):
     veiculo = get_object_or_404(Veiculo, id=veiculo_id)
-    return render(request, 'update.html', {"veiculo":veiculo})
+    return render(request, 'forms.html', {"veiculo":veiculo})
 
 def update_veiculo(request, veiculo_id):
     if request.method == 'POST':

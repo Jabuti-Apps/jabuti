@@ -6,58 +6,58 @@
                 <div class="flex flex-wrap justify-center">
                     <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2 mx-auto">
                         <p class="text-xl pb-6 flex items-center">
-                            <i class="fas fa-list mr-3"></i> Cadastrar veiculo
+                            <i class="fas fa-list mr-3"></i> Editar Veiculo
                         </p>
                         <div class="leading-loose">
-                            <form method="POST" class="p-10 bg-white rounded shadow-xl">
+                            <form action="{% url 'update_veiculo' veiculo.id %}" method="POST" class="p-10 bg-white rounded shadow-xl">
                                 {% csrf_token %}
                                 <p class="text-lg text-gray-800 font-medium pb-4">Informações do Veículo</p>
                                 <div class="mt-2">
                                     <label class="block text-sm text-gray-600" for="crv">CRV:</label>
-                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="crv" name="crv" type="number" value="{{ veiculo.crv }}" placeholder="CRV">
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="crv" name="crv" type="number" value="{{ veiculo.crv }}" required="" placeholder="CRV" aria-label="CRV">
                                 </div>
 
                                 <div class="w-full inline-grid grid-cols-2 gap-x-4 mt-2">
                                     <div>
                                         <label class="block text-sm text-gray-600" for="marca">Marca:</label>
-                                        <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="marca" name="marca" type="text" value="{{ veiculo.marca }}" placeholder="Marca">
+                                        <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="marca" name="marca" type="text" value="{{ veiculo.marca }}">
                                     </div>
                                     <div>
                                         <label class="block text-sm text-gray-600" for="modelo">Modelo:</label>
-                                        <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="modelo" name="modelo" type="text" value="{{ veiculo.modelo }}" placeholder="Modelo">
+                                        <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="modelo" name="modelo" type="text" value="{{ veiculo.modelo }}">
                                     </div>
                                 </div>                                                              
 
                                 <div class="mt-2">
                                     <label class="block text-sm text-gray-600" for="cor">Cor:</label>
-                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="cor" name="cor" type="text" value="{{ veiculo.cor }}" required="" placeholder="Cor">
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="cor" name="cor" type="text" value="{{ veiculo.cor }}" required="" placeholder="cor" aria-label="cor">
                                 </div>
 
                                 <div class="mt-2">
                                     <label class="block text-sm text-gray-600" for="placa">Placa:</label>
-                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="placa" name="placa" type="text" value="{{ veiculo.placa }}" required="" placeholder="Placa">
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="placa" name="placa" type="text" value="{{ veiculo.placa }}" required="" placeholder="placa" aria-label="placa">
                                 </div>
                                 
                                 <div class="mt-2">
                                     <label class="block text-sm text-gray-600" for="anoDeFabricacao">Ano de fabricação:</label>
-                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="anoDeFabricacao" name="anoDeFabricacao" type="number" value="{{ veiculo.anoDeFabricacao }}" required="" placeholder="Ano de fabricacao">
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="anoDeFabricacao" name="anoDeFabricacao" type="number" value="{{ veiculo.anoDeFabricacao }}" required="" placeholder="anoDeFabricacao" aria-label="anoDeFabricacao">
                                 </div>
 
                                 <div class="mt-2">
                                     <label class="block text-sm text-gray-600" for="capacidadeCombustivel">Capacidade Combustivel:</label>
-                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="capacidadeCombustivel" name="capacidadeCombustivel" type="text" value="{{ veiculo.capacidadeCombustivel }}" placeholder="Capacidade combustivel">
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="capacidadeCombustivel" name="capacidadeCombustivel" type="text" value="{{ veiculo.capacidadeCombustivel }}">
                                 </div>
 
                                 <div class="mt-2">
                                     <label class="block text-sm text-gray-600" for="quilometragem">Quilometragem:</label>
-                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="quilometragem" name="quilometragem" type="number" value="{{ veiculo.quilometragem }}" placeholder="Quilometragem">
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="quilometragem" name="quilometragem" type="number" value="{{ veiculo.quilometragem }}">
                                 </div>
 
                                 <div class="mt-2">
                                     <label for="tipoDeCombustivel" class="block text-sm text-gray-600">
                                         Tipo de Combustivel:</label>
                                     <select id="tipoDeCombustivel" name="tipoDeCombustivel" 
-                                    class="w-full h-12 px-2 py-2 text-gray-700 bg-gray-200 rounded">
+                                    class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded">
                                         <option value="Gasolina" {% if veiculo.tipoDeCombustivel == 'Gasolina' %} selected {% endif %}>Gasolina</option>
                                         <option value="Gasolina/Alcool" {% if veiculo.tipoDeCombustivel == 'Gasolina/Alcool' %} selected {% endif %}>Gasolina/Alcool</option>
                                         <option value="Diesel" {% if veiculo.tipoDeCombustivel == 'Diesel' %} selected {% endif %}>Diesel</option>
@@ -95,7 +95,7 @@
                                 </div>
 
                                 <div class="mt-6 flex justify-center">
-                                    <button class="px-4 py-2 text-white font-semibold tracking-wider bg-gray-900 rounded hover:bg-gray-800" type="submit" value="Cadastrar veiculo">Cadastrar</button>
+                                    <button class="px-4 py-2 text-white font-semibold tracking-wider bg-gray-900 rounded hover:bg-gray-800" type="submit">Salvar alterações</button>
                                 </div>
                             </form>
                         </div>
@@ -103,4 +103,5 @@
                     
                 </div>
             </main>
+
 {% endblock %}
