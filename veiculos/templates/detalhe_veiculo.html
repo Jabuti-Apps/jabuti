@@ -1,59 +1,167 @@
 {% extends "base.html" %}
 
-{% block page_content %}
-{% if messages %}
-<ul class="messages; cor:red">
-    {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<div class="mw6 center pa3 sans-serif">
-    <h1> Detalhes Do Carro </h1>
-    <div class="pa2 mb3 striped--near-white">
-        <div class="pl2">
-            <p class="mb2">Id: {{ veiculo.id }}</p>
-            <p class="mb2">Marca/Modelo: {{ veiculo.marca }} {{ veiculo.modelo }}</p>
-            <p class="mb2">Ano: {{ veiculo.anoDeFabricacao }}</p>
-            <p class="mb2">CRV: {{ veiculo.crv }}</p>
-            <p class="mb2">Cor: {{ veiculo.cor }}</p>
-            <p class="mb2">Placa: {{ veiculo.placa }}</p>
-            <p class="mb2">Quilometragem: {{ veiculo.quilometragem }}</p>
-            <p class="mb2">Disponivel: {{ veiculo.estaDisponivel }}</p>
-            <p class="mb2">Gasolina: {{ veiculo.precisaAbastecer }}</p>
-            <p class="mb2">Seguro: {{ veiculo.temSeguro }}</p>
-            <p class="mb2">Alugado: {{ veiculo.alugado }}</p>
-            <p class="mb2">Precisa de Manutenção: {{ veiculo.precisaDeManutencao }} </p> <br>
+{% block content %}
 
-            {% if not veiculo.precisaDeManutencao %}
-                <form action="{% url 'solicitar_manutencao' veiculo.id %}" method="post" style="display: inline-block; margin-left: 80px;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Solicitar Manutenção</button>
-                </form>
-            {% endif %}
-        </div>
-    </div>
-    <div class="justify-content-between align-items-center">
-        <h2 style="display: inline-block;">Manutenções</h2>
-        <a href="{% url 'criar_manutencao_veiculo' veiculo.id %}" class="btn btn-primary" style="margin-left: 80px;">Criar Manutenção</a>
-    </div>
-    <div class="mw6 center pa3 sans-serif">
-        {% if manutencoes %}
-            {% for manutencao in manutencoes %}
-                <div class="pa2 mb3 striped--near-white">
-                    <div class="pl2">
-                        <p class="mb2">Tipo de Manutenção: {{ manutencao.tipoManutencao }}</p>
-                        {% if manutencao.tipoManutencao == "Outro" %}
-                            <p class="mb2">- {{ manutencao.outraOpcao }}</p>
-                        {% endif %}
-                        <p class="mb2">Data: {{ manutencao.data }}</p>
-                        <p class="mb2">Quilometragem: {{ manutencao.quilometragemDoVeiculo }}</p>
+<main class="w-full flex-grow p-6 mt-6">
+        <div class="flex justify-center items-start gap-x-4">
+            <div class="relative flex flex-col items-center rounded-[20px] w-1/4 mx-12 bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
+                <div class="mt-2 mb-8 w-full">
+                    <h4 class="px-2 text-xl font-bold text-navy-700 dark:text-white">
+                    Detalhes Do Carro
+                    </h4>
+                </div> 
+                <div class="grid grid-cols-2 gap-4 px-2 ">
+                    <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Marca/Modelo:</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.marca }} {{ veiculo.modelo }}
+                    </p>
+                    </div>
+
+                    <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Ano:</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.anoDeFabricacao }}
+                    </p>
+                    </div>
+
+                    <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">CRV:</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.crv }}
+                    </p>
+                    </div>
+
+                    <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Cor: </p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.cor }}
+                    </p>
+                    </div>
+
+                    <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Placa:</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.placa }}
+                    </p>
+                    </div>
+
+                    <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Quilometragem:</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.quilometragem }}
+                    </p>
+                    </div>
+
+                    <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                        <p class="text-sm text-gray-600">Disponivel:</p>
+                        <p class="text-base font-medium text-navy-700 dark:text-white">
+                            {{ veiculo.estaDisponivel }}
+                        </p>
+                        </div>
+
+                    <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Gasolina: </p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.precisaAbastecer }}
+                    </p>
+                    </div>
+
+                    <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Seguro:</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.temSeguro }}
+                    </p>
+                    </div>
+
+                    <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Alugado:</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.alugado }}
+                    </p>
+                    </div>
+                    
+                    <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Precisa de Manutenção:</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ veiculo.precisaDeManutencao }}
+                    </p>
                     </div>
                 </div>
-            {% endfor %}
-        {% else %}
-            <p>Sem manutenções.</p>
-        {% endif %}
-    </div>
-</div>
+            </div>
+            <div class="relative flex flex-col items-center rounded-[20px] w-1/4 mx-12 bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3 h-auto">
+                <div class="mt-2 mb-8 w-full">
+                    <h4 class="px-2 text-xl font-bold text-navy-700 dark:text-white">
+                    Manutenção
+                    </h4>
+                </div>
+                {% if manutencoes %}
+                    {% for manutencao in manutencoes %} 
+                    <div class="grid grid-cols-2 gap-4 px-2 w-[500px]">
+                        <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                        <p class="text-sm text-gray-600">Tipo de Manutenção:</p>
+                        <p class="text-base font-medium text-navy-700 dark:text-white">
+                             {{ manutencao.tipoManutencao }}</p>
+                             {% if manutencao.tipoManutencao == "Outro" %}
+                                <p class="text-base font-medium text-navy-700 dark:text-white">- {{ manutencao.outraOpcao }}</p>
+                             {% endif %}                           
+                        </div>
+
+                        <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                        <p class="text-sm text-gray-600">Data: </p>
+                        <p class="text-base font-medium text-navy-700 dark:text-white">
+                            {{ manutencao.dataEntrada }}
+                        </p>
+                        </div>
+
+                        <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                        <p class="text-sm text-gray-600">Quilometragem: </p>
+                        <p class="text-base font-medium text-navy-700 dark:text-white">
+                            {{ manutencao.quilometragemDoVeiculo }}
+                        </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Sem manutenções.</p>
+                {% endif %}
+            </div> 
+            <div class="relative flex flex-col items-center rounded-[20px] w-1/4 mx-12 bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3 h-auto">
+                <div class="mt-2 mb-8 w-full">
+                    <h4 class="px-2 text-xl font-bold text-navy-700 dark:text-white">
+                    Agendamentos
+                    </h4>
+                </div>
+                {% if manutencoes %}
+                    {% for manutencao in manutencoes %} 
+                    <div class="grid grid-cols-2 gap-4 px-2 w-[500px]">
+                        <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                        <p class="text-sm text-gray-600">Tipo de Manutenção:</p>
+                        <p class="text-base font-medium text-navy-700 dark:text-white">
+                             {{ manutencao.tipoManutencao }}</p>
+                             {% if manutencao.tipoManutencao == "Outro" %}
+                                <p class="text-base font-medium text-navy-700 dark:text-white">- {{ manutencao.outraOpcao }}</p>
+                             {% endif %}                           
+                        </div>
+
+                        <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                        <p class="text-sm text-gray-600">Data: </p>
+                        <p class="text-base font-medium text-navy-700 dark:text-white">
+                            {{ manutencao.dataEntrada }}
+                        </p>
+                        </div>
+
+                        <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                        <p class="text-sm text-gray-600">Quilometragem: </p>
+                        <p class="text-base font-medium text-navy-700 dark:text-white">
+                            {{ manutencao.quilometragemDoVeiculo }}
+                        </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Sem Agendamentos.</p>
+                {% endif %}
+        </div>
+</main>
 {% endblock %}

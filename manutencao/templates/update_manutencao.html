@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+            <main class="w-full flex-grow p-6">
+                <div class="flex flex-wrap justify-center">
+                    <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2 mx-auto">
+                        <p class="text-xl pb-6 flex items-center">
+                            <i class="fas fa-list mr-3"></i> Editar Manutenção
+                        </p>
+                        <div class="leading-loose">
+                            <form action="{% url 'update_manutencao' manutencao.id %}" method="POST" class="p-10 bg-white rounded shadow-xl">
+                                {% csrf_token %}
+                                <div class="mt-2">
+                                    <label for="id_veiculo" class="block text-sm text-gray-600">
+                                        Veiculo:</label>
+                                    <select id="id_veiculo" name="veiculo" 
+                                    class="w-full h-12 px-2 py-2 text-gray-700 bg-gray-200 rounded">
+                                            <option value="{{ veiculo.id }}">{{ manutencao.veiculo.placa }}</option>
+                                            
+                                    </select>
+                                </div>
+
+                                <div class="w-full inline-grid grid-cols-2 gap-x-4 mt-2">
+                                    <div>
+                                        <label for="tipo_manutencao" class="block text-sm text-gray-600">
+                                            Tipo de Manutenção:</label>
+                                        <select id="id_tipo_manutencao" name="tipo_manutencao" 
+                                        class="w-full h-12 px-2 py-2 text-gray-700 bg-gray-200 rounded">
+                                            <option value="Troca de Oleo" {% if manutencao.tipoManutencao == 'Troca de Oleo' %} selected {% endif %} >Troca de Óleo</option>
+                                            <option value="Troca de Pneu" {% if manutencao.tipoManutencao == "Troca de Pneu" %} selected {% endif %}>Troca de Pneu</option>
+                                            <option value="Troca Kit de Freio" {% if manutencao.tipoManutencao == "Troca Kit de Freio" %} selected {% endif %}>Troca Kit de Freio</option>
+                                            <option value="Limpeza do radiador"{% if manutencao.tipoManutencao == "Limpeza do radiador" %} selected {% endif %}>Limpeza do radiador</option>
+                                            <option value="Outro" {% if manutencao.tipoManutencao == "Outro"%} selected {% endif %} >Outro</option>
+                                        </select>
+                                    </div>
+                                </div>                                                              
+
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="id_outra_opcao">Outra Opção:</label>
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="id_outra_opcao" name="outra_opcao" type="text" value="{{ manutencao.outraOpcao }}" placeholder="Outra Opção">
+                                </div>
+
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="id_quilometragem">Quilometragem:</label>
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="id_quilometragem" name="quilometragem" type="number" value="{{ manutencao.quilometragemDoVeiculo }}">
+                                </div>
+
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="id_dataEntrada">Data Entrada:</label>
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="id_dataEntrada" name="dataEntrada" type="date" value="{{ manutencao.dataEntrada }}">
+                                </div>
+
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="id_dataSaida">Data Saída:</label>
+                                    <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="id_dataSaida" name="dataSaida" type="date" value="{{ manutencao.dataSaida }}" >
+                                </div>
+
+                                <div class="mt-6 flex justify-center">
+                                    <button class="px-4 py-2 text-white font-semibold tracking-wider bg-gray-900 rounded hover:bg-gray-800" type="submit">Salvar alterações</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </main>
+
+{% endblock %}

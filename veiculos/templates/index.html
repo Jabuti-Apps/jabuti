@@ -21,23 +21,41 @@
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Marca/Modelo</th>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Cor</th>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Placa</th>
-                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Disponível</th>
-                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Manutenção</th>
+                                    <th class="py-4 px-3 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Disponível</th>
+                                    <th class="py-4 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Status</th>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for veiculo in veiculos %}
+                                <!-- Iterar sobre os veículos na página atual -->
+                                {% for veiculo in page_obj %}
                                 <tr class="hover:bg-grey-lighter">
                                     <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.id }}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.marca }} {{ veiculo.modelo }}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.cor }}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.placa }}</td>
-                                    <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.estaDisponivel }}</td>
-                                    <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.precisaDeManutencao }}</td>
+                                    <td class="p-2 pr-12 border-b border-grey-light text-end ">
+                                        {% if veiculo.estaDisponivel %}
+                                            <span class="text-center px-3 py-1 mr-auto items-center font-semibold text-[.95rem] leading-none text-green-800 bg-green-200 rounded-lg">Sim</span>
+                                        {% else %}
+                                            <span class="text-center px-3 py-1 mr-auto items-center font-semibold text-[.95rem] leading-none text-red-800 bg-red-200 rounded-lg">Não</span>
+                                        {% endif %}
+                                    </td>                                    
+                                    <td class="p-2 pr-12 border-b border-grey-light text-end">
+                                        {% if veiculo.precisaAbastecer %}
+                                            <span class="text-red-800 bg-red-200 rounded-lg p-1 m-1">
+                                                <i class="fas fa-gas-pump"></i> <!-- Ícone de abastecimento -->
+                                            </span>
+                                        {% endif %}
+                                        {% if veiculo.precisaDeManutencao %}
+                                            <span class="text-red-800 bg-red-200 rounded-lg p-1 m-1">
+                                                <i class="fas fa-wrench"></i> <!-- Ícone de manutenção -->
+                                            </span>
+                                        {% endif %}
+                                    </td>                                                            
                                     <td class="py-4 px-6 border-b border-grey-light">
                                         <a href="{% url 'detalhe_veiculo' veiculo.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark"><button>Detalhes</button></a>
-                                        <a href="{% url 'editar_veiculo' veiculo.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark"><button>Editar</button></a>
+                                        <a href="{% url 'update_veiculo' veiculo.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark"><button>Editar</button></a>
                                         <a href="{% url 'deletar_veiculo' veiculo.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-red hover:bg-red-dark"><button>Deletar</button></a>
                                     </td>
                                 </tr>
@@ -45,10 +63,37 @@
                             </tbody>
                         </table>
                     </div>
-                    <p class="pt-3 text-gray-600">
-                        Source: <a class="underline" href="https://tailwindcomponents.com/component/table">https://tailwindcomponents.com/component/table</a>
-                    </p>
+                   <!-- Exibição de página -->
+            <div class="flex items-center justify-between mt-6">
+                <!-- Link para a página anterior -->
+                <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}" class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+                    </svg>
+
+                    <span>
+                        previous
+                    </span>
+                </a>
+
+                <!-- Números de página -->
+                <div class="items-center hidden md:flex gap-x-3">
+                    {% for num in page_obj.paginator.page_range %}
+                        <a href="?page={{ num }}" class="px-2 py-1 text-sm {% if page_obj.number == num %}text-blue-500{% else %}text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-300{% endif %} rounded-md {% if page_obj.number == num %}bg-blue-100/60{% endif %}">{{ num }}</a>
+                    {% endfor %}
                 </div>
-            </main>
-  
+
+                <!-- Link para a próxima página -->
+                <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}" class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                    <span>
+                        Next
+                    </span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </main>
 {% endblock %}

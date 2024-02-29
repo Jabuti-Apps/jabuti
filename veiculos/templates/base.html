@@ -7,6 +7,7 @@
     <meta name="author" content="David Grzyb">
     <meta name="description" content="">
     <link href="https://unpkg.com/tailwindcss@0.3.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Tailwind -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
@@ -43,9 +44,9 @@
                 <i class="fas fa-table mr-3"></i>
                 Veiculos
             </a>
-            <a href="forms.html" class="flex items-center text-white py-4 pl-6 nav-item">
+            <a href="{% url 'manutencao' %}" class="flex items-center text-white py-4 pl-6 nav-item">
                 <i class="fas fa-align-left mr-3"></i>
-                Forms
+                Manutenções
             </a>
             <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-tablet-alt mr-3"></i>

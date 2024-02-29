@@ -3,15 +3,20 @@ from django.contrib import messages
 from django.utils import timezone
 from veiculos.models import Veiculo
 from manutencao.models import Manutencao
+from django.core.paginator import Paginator
 
 def veiculos(request):
     veiculos = Veiculo.objects.all().order_by('id')
+    # Configuração da paginação
+    paginator = Paginator(veiculos, 5)  # Exibir 5 veículos por página
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
-    return render(request,"index.html", {"veiculos": veiculos,})
+    return render(request,"index.html", {'page_obj': page_obj})
 
 def detalhe_veiculo(request, veiculo_id):
     car_obj = get_object_or_404(Veiculo, id=veiculo_id)
-    manutencao_obj = Manutencao.objects.filter(veiculo=car_obj).order_by('-data')
+    manutencao_obj = Manutencao.objects.filter(veiculo=car_obj).order_by('-dataEntrada')
 
     context = {
         "veiculo": car_obj,
@@ -51,40 +56,27 @@ def cadastrar_veiculo(request):
     
     return render(request, 'cadastrar_veiculo.html')
 
-def editar_veiculo(request, veiculo_id):
-    veiculo = get_object_or_404(Veiculo, id=veiculo_id)
-    return render(request, 'forms.html', {"veiculo":veiculo})
-
 def update_veiculo(request, veiculo_id):
-    if request.method == 'POST':
-        vcrv = request.POST.get('crv')
-        vmarca = request.POST.get('marca')
-        vmodelo = request.POST.get('modelo') 
-        vcor = request.POST.get('cor')
-        vplaca = request.POST.get('placa')
-        vanoDeFabricacao = request.POST.get('anoDeFabricacao')
-        vcapacidadeCombustivel = request.POST.get('capacidadeCombustivel')
-        vtipoDeCombustivel = request.POST.get('tipoDeCombustivel')
-        vquilometragem = request.POST.get('quilometragem')
-        vtemSeguro = request.POST.get('temSeguro')
-        valugado = request.POST.get('alugado')
-
-    veiculo = Veiculo.objects.get(id=veiculo_id)
+    veiculo = get_object_or_404(Veiculo, id=veiculo_id)
     
-    veiculo.crv = vcrv
-    veiculo.marca = vmarca
-    veiculo.modelo = vmodelo
-    veiculo.cor = vcor
-    veiculo.placa = vplaca
-    veiculo.anoDeFabricacao = vanoDeFabricacao
-    veiculo.capacidadeCombustivel = vcapacidadeCombustivel
-    veiculo.tipoDeCombustivel = vtipoDeCombustivel
-    veiculo.quilometragem = vquilometragem
-    veiculo.temSeguro = vtemSeguro
-    veiculo.alugado = valugado
+    if request.method == 'POST':
+        veiculo.crv = request.POST.get('crv')
+        veiculo.marca = request.POST.get('marca')
+        veiculo.modelo = request.POST.get('modelo') 
+        veiculo.cor = request.POST.get('cor')
+        veiculo.placa = request.POST.get('placa')
+        veiculo.anoDeFabricacao = request.POST.get('anoDeFabricacao')
+        veiculo.capacidadeCombustivel = request.POST.get('capacidadeCombustivel')
+        veiculo.tipoDeCombustivel = request.POST.get('tipoDeCombustivel')
+        veiculo.quilometragem = request.POST.get('quilometragem')
+        veiculo.temSeguro = request.POST.get('temSeguro')
+        veiculo.alugado = request.POST.get('alugado')
 
-    veiculo.save()
-    return redirect('veiculos')
+        veiculo.save()
+        messages.success(request, 'Veículo atualizado com sucesso.')
+        return redirect('veiculos')
+
+    return render(request, 'update_veiculo.html', {"veiculo": veiculo})
 
 def deletar_veiculo(request, veiculo_id):
     veiculo = Veiculo.objects.get(id=veiculo_id)
@@ -124,14 +116,16 @@ def criar_manutencao_veiculo(request, veiculo_id):
         tipo_manutencao = request.POST.get('tipo_manutencao')
         outra_opcao = request.POST.get('outra_opcao', '') 
         quilometragem = request.POST.get('quilometragem')
-        data = request.POST.get('data')
+        dataEntrada = request.POST.get('data')
+        dataSaida = request.POST.get('data')
 
         Manutencao.objects.create(
             veiculo_id=veiculo_id,
             tipoManutencao=tipo_manutencao,
             outraOpcao=outra_opcao,
             quilometragemDoVeiculo=quilometragem,
-            data=data
+            dataEntrada=dataEntrada,
+            dataSaida=dataSaida
         )
 
         # Após criar a manutenção, altera a coluna precisaDeManutencao para False no veículo correspondente
