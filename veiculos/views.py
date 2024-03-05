@@ -4,7 +4,9 @@ from django.utils import timezone
 from veiculos.models import Veiculo
 from manutencao.models import Manutencao
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/autorizacao/')
 def veiculos(request):
     veiculos = Veiculo.objects.all().order_by('id')
     # Configuração da paginação
@@ -14,6 +16,7 @@ def veiculos(request):
     
     return render(request,"index.html", {'page_obj': page_obj})
 
+@login_required(login_url='/autorizacao/')
 def detalhe_veiculo(request, veiculo_id):
     car_obj = get_object_or_404(Veiculo, id=veiculo_id)
     manutencao_obj = Manutencao.objects.filter(veiculo=car_obj).order_by('-dataEntrada')
@@ -24,6 +27,7 @@ def detalhe_veiculo(request, veiculo_id):
     }
     return render(request, "detalhe_veiculo.html", context)
 
+@login_required(login_url='/autorizacao/')
 def cadastrar_veiculo(request):
     if request.method == 'POST':
         crv = request.POST.get('crv')
@@ -56,6 +60,7 @@ def cadastrar_veiculo(request):
     
     return render(request, 'cadastrar_veiculo.html')
 
+@login_required(login_url='/autorizacao/')
 def update_veiculo(request, veiculo_id):
     veiculo = get_object_or_404(Veiculo, id=veiculo_id)
     
@@ -78,11 +83,13 @@ def update_veiculo(request, veiculo_id):
 
     return render(request, 'update_veiculo.html', {"veiculo": veiculo})
 
+@login_required(login_url='/autorizacao/')
 def deletar_veiculo(request, veiculo_id):
     veiculo = Veiculo.objects.get(id=veiculo_id)
     veiculo.delete()
     return redirect('veiculos')
 
+@login_required(login_url='/autorizacao/')
 def solicitar_manutencao(request, veiculo_id):
     if request.method == 'POST':
         veiculo = Veiculo.objects.get(id=veiculo_id)
@@ -109,8 +116,7 @@ def solicitar_manutencao(request, veiculo_id):
 
         return redirect('detalhe_veiculo', veiculo_id=veiculo_id)
 
-
-
+@login_required(login_url='/autorizacao/')
 def criar_manutencao_veiculo(request, veiculo_id):
     if request.method == 'POST':
         tipo_manutencao = request.POST.get('tipo_manutencao')

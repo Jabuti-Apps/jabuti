@@ -40,11 +40,11 @@
                 <i class="fas fa-sticky-note mr-3"></i>
                 Blank Page
             </a>
-            <a href="{% url 'veiculos' %}" class="flex items-center active-nav-link opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <a href="/veiculos" class="flex items-center active-nav-link opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-table mr-3"></i>
                 Veiculos
             </a>
-            <a href="{% url 'manutencao' %}" class="flex items-center text-white py-4 pl-6 nav-item">
+            <a href="/manutencao" class="flex items-center text-white py-4 pl-6 nav-item">
                 <i class="fas fa-align-left mr-3"></i>
                 Manutenções
             </a>
@@ -57,9 +57,9 @@
                 Calendar
             </a>
         </nav>
-        <a href="#" class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
-            <i class="fas fa-arrow-circle-up mr-3"></i>
-            Upgrade to Pro!
+        <a href="/logout" class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
+            <i class="fas fa-arrow-circle-left mr-3"></i>
+            Sair
         </a>
     </aside>
 
@@ -75,7 +75,7 @@
                 <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
                     <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
                     <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
-                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                    <a href="/logout" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
                 </div>
             </div>
         </header>
@@ -124,12 +124,12 @@
                     <i class="fas fa-user mr-3"></i>
                     My Account
                 </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <a href="/logout" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i class="fas fa-sign-out-alt mr-3"></i>
                     Sign Out
                 </a>
                 <button class="w-full bg-white cta-btn font-semibold py-2 mt-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                    <i class="fas fa-arrow-circle-up mr-3"></i> Upgrade to Pro!
+                    <i class="fas fa-arrow-circle-up mr-3"></i> Sair
                 </button>
             </nav>
             <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">

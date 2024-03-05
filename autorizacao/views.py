@@ -1,20 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate
-from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt
+
 
 def home(request):
     return render(request, 'home.html')
 
-def autorizacao(request):
-    return render(request, "login.html")
-
 def signup(request):
     return render(request, "signup.html")
 
-@csrf_exempt
+def logout_user(request):
+    logout(request)
+    return redirect("/")
+
 def criar(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -25,24 +24,26 @@ def criar(request):
         user.save()
 
         if user is not None:
-            return redirect("disponiveis")
+            
+            return redirect("/")
         else:
             return render(request, "nao_autorizado.html")
 
     return render(request, "nao_autorizado.html")
 
-@csrf_exempt
-def login(request):
+
+def submit_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password') 
 
         user = authenticate(username=username, password=password)
+        print(user)
 
         if user is not None:
-            return redirect("disponiveis")
+            login(request, user)
+            return redirect("/veiculos")
         else:
-            return render(request, "nao_autorizado.html")
-
-    return render(request, "nao_autorizado.html")
+            messages.error(request, "Usuário ou senha inválido")
+    return redirect("/")
 
