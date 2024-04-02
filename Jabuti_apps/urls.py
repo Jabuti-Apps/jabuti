@@ -13,4 +13,8 @@ urlpatterns = [
     path("manutencao/", include("manutencao.urls")),
 
     path("autorizacao/", include("autorizacao.urls")),
+
+    path("abastecimento/", include("abastecimento.urls")),
+
+    path("agendamento/", include("agendamento.urls")),
 ]

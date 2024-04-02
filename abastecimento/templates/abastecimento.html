@@ -1,0 +1,75 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+    
+        
+            <main class="w-full flex-grow p-6">
+                <h1 class="text-3xl text-black pb-6">Abastecimento</h1>
+                <a href="{% url 'criar_abastecer' %}" class="flex items-center justify-center w-64 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg  hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>    
+                    <span>Criar abastecimento</span>
+                </a>
+                
+                <div class="w-full mt-12"> 
+                    <div class="bg-white overflow-auto">
+                        <table class="text-left w-full border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">ID</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Veiculo/Modelo</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Valor Pago</th>
+                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Iterar sobre os veículos na página atual -->
+                                {% for abastecimento in abastecimentos %}
+                                <tr class="hover:bg-grey-lighter">
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ abastecimento.id }}</td>
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ abastecimento.veiculo.marca }} {{ abastecimento.veiculo.modelo }}</td> 
+                                    <td class="py-4 px-6 border-b border-grey-light">{{ abastecimento.valorpago }}</td> 
+                                    <td class="py-4 px-6 border-b border-grey-light">
+                                        <a href="{% url 'deletar_abastecimento' abastecimento.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-red hover:bg-red-dark"><button>Excluir</button></a>
+                                    </td>                                           
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                   <!-- Exibição de página -->
+            <div class="flex items-center justify-between mt-6">
+                <!-- Link para a página anterior -->
+                <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}" class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+                    </svg>
+
+                    <span>
+                        previous
+                    </span>
+                </a>
+
+                <!-- Números de página -->
+                <div class="items-center hidden md:flex gap-x-3">
+                    {% for num in page_obj.paginator.page_range %}
+                        <a href="?page={{ num }}" class="px-2 py-1 text-sm {% if page_obj.number == num %}text-blue-500{% else %}text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-300{% endif %} rounded-md {% if page_obj.number == num %}bg-blue-100/60{% endif %}">{{ num }}</a>
+                    {% endfor %}
+                </div>
+
+                <!-- Link para a próxima página -->
+                <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}" class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                    <span>
+                        Next
+                    </span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </main>
+{% endblock %}

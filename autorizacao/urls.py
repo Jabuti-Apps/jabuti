@@ -7,5 +7,6 @@ urlpatterns = [
     path('criar/', views.criar, name="create_user"),
     path("login/", views.submit_login, name="submit_login"),
     path("logout/", views.logout_user, name="logout"),
-    path("calendar/", views.calendar, name="calendar")
+    path("calendar/", views.calendar, name="calendar"),
+    
 ]
