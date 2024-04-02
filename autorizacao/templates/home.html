@@ -27,8 +27,9 @@
                 <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                     <form method="POST" action="{% url 'submit_login' %}">
                       {%csrf_token%}
-                        <div class="flex justify-center py-8">
-                          <span class="text-2xl font-semibold">Jabuti-Apps</span>
+                        <div class="flex justify-center items-center py-8">
+                          <img src="\static\LogoJabutiMini-removebg-preview 1.png" alt="Logo GeFrota" class="w-20 h-20  ">
+                          <span class="text-2xl font-semibold">Jabuti Apps</span>
                         </div>
 
                         <div>
@@ -36,14 +37,14 @@
                             <input type='username' 
                                 name='username'
                                 placeholder='Username'
-                                class="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]" />                        
+                                class="w-full rounded-md py-2.5 px-4 border text-sm outline-blue-600" />                        
                         </div>
 
 
                         <div class="mt-4">
                             <label class="block font-medium text-sm text-gray-700" for="password" value="Password"></label>
                             <div class="relative">
-                                <input id="password" type="password" name="password" placeholder="Password" required autocomplete="current-password" class = 'w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]'>
+                                <input id="password" type="password" name="password" placeholder="Password" required autocomplete="current-password" class = 'w-full rounded-md py-2.5 px-4 border text-sm outline-blue-600'>
 
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
                                     <button type="button" id="togglePassword" class="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600">

@@ -47,3 +47,5 @@ def submit_login(request):
             messages.error(request, "Usuário ou senha inválido")
     return redirect("/")
 
+def calendar(request):
+    return render(request, 'calendar.html')
