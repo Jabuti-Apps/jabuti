@@ -27,3 +27,6 @@ class Veiculo(models.Model):
     #orgao int [ref: > orgao.id]
     ultimaLavagem = models.DateField(default=None, blank=True, null=True)
     criadoEm = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Modelo: {self.modelo}, Placa: {self.placa}'

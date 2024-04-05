@@ -20,3 +20,6 @@ class Manutencao(models.Model):
     dataEntrada = models.DateField(blank=True, null=True)
     dataSaida = models.DateField(blank=True, null=True)
     criadoEm = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Manutenção: {self.tipoManutencao}'
