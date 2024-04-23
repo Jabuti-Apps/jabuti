@@ -9,4 +9,5 @@ urlpatterns = [
     path("logout/", views.logout_user, name="logout"),
     path("calendar/", views.calendar, name="calendar"),
     path("funcionarios/", views.funcionarios, name="funcionarios"),
+    path("gerenciar_funcionario/<int:funcionario_id>/", views.gerenciar_funcionario, name="gerenciar_funcionario"),
 ]

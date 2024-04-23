@@ -48,7 +48,7 @@ def cadastro(request):
             foto=foto,
         )
 
-        return redirect("/")
+        return redirect("funcionarios")
 
 
 def submit_login(request):
@@ -75,8 +75,22 @@ def funcionarios(request):
         usuarios = CustomUser.objects.all().order_by('username')
 
         # Configuração da paginação
-        paginator = Paginator(usuarios, 5)  # Exibir 5 veículos por página
+        paginator = Paginator(usuarios, 10)  # Exibir 5 objetos por página
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         
         return render(request, 'funcionarios.html', {'usuarios':usuarios, 'page_obj': page_obj})
+    
+@gestor_required
+def gerenciar_funcionario(request, funcionario_id):
+    funcionario = CustomUser.objects.get(id=funcionario_id)
+    
+    if request.method == "POST":
+        if "ativar" in request.POST:
+            funcionario.is_active = True
+            funcionario.save()
+        elif "desativar" in request.POST:
+            funcionario.is_active = False
+            funcionario.save()
+
+        return redirect('funcionarios') 

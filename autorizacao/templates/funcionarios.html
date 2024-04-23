@@ -32,6 +32,10 @@
                                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Status
                                             </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Ações
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -78,6 +82,16 @@
                                                     <span class="relative">Inativo</span>
                                                 </span>
                                             {% endif %}
+                                            </td>
+                                            <td class="py-4 px-6 border-b border-grey-light">
+                                                <form action="{% url 'gerenciar_funcionario' usuario.id %}" method="POST">
+                                                    {% csrf_token %}
+                                                    {% if usuario.is_active %}
+                                                        <button type="submit" name="desativar" class="text-grey-lighter font-bold py-1 px-3 w-20 rounded text-xs bg-red hover:bg-red-dark">Desativar</button>
+                                                    {% else %}
+                                                        <button type="submit" name="ativar" class="text-grey-lighter font-bold py-1 px-3 w-20 rounded text-xs bg-green hover:bg-green-dark">Ativar</button>
+                                                    {% endif %}
+                                                </form>
                                             </td>
                                         </tr>
                                     {% endfor %}
