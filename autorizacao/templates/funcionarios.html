@@ -1,0 +1,121 @@
+
+{% extends "base.html" %}
+
+{% block content %}    
+
+<main class="w-full flex-grow p-6">
+    <div>    
+        <div class="w-full mt-12">
+                            <p class="text-xl pb-3 flex items-center">
+                                <i class="fas fa-list mr-3"></i> Funcionarios
+                            </p>
+                            <a href="{% url 'cadastro' %}" class="flex items-center justify-center w-64 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg  hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                                <i class="fas fa-plus mr-3"></i><span>Cadastrar Funcionario</span>
+                            </a>
+                            <div class="bg-white overflow-auto">
+                                <table class="min-w-full leading-normal">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Nome
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Função
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Orgao
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Status
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for usuario in page_obj %}
+                                        <tr>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 w-10 h-10">
+                                                        {% if usuario.foto %}
+                                                            <img class="w-full h-full rounded-full" src="{{ usuario.foto.url }}" alt="">
+                                                        {% else %}
+                                                            <img class="w-full h-full rounded-full" src="/static/default.jpg" alt="">
+                                                        {% endif %}
+                                                    </div>
+
+                                                    <div class="ml-3">
+                                                        <p class="text-gray-900 whitespace-no-wrap">
+                                                            {{usuario.username}}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p class="text-gray-900 whitespace-no-wrap">{{usuario.get_role_display}}</p>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{usuario.orgao}}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                            {% if usuario.is_active %}
+                                                <span
+                                                    class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                    <span aria-hidden
+                                                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                    <span class="relative">Ativo</span>
+                                                </span>
+                                            {% else %}
+                                                <span
+                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                    <span aria-hidden
+                                                        class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                    <span class="relative">Inativo</span>
+                                                </span>
+                                            {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Exibição de página -->
+                            <div class="flex items-center justify-between mt-6">
+                                <!-- Link para a página anterior -->
+                                <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}" class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+                                    </svg>
+
+                                    <span>
+                                        previous
+                                    </span>
+                                </a>
+
+                                <!-- Números de página -->
+                                <div class="items-center hidden md:flex gap-x-3">
+                                    {% for num in page_obj.paginator.page_range %}
+                                        <a href="?page={{ num }}" class="px-2 py-1 text-sm {% if page_obj.number == num %}text-blue-500{% else %}text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-300{% endif %} rounded-md {% if page_obj.number == num %}bg-blue-100/60{% endif %}">{{ num }}</a>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Link para a próxima página -->
+                                <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}" class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                                    <span>
+                                        Next
+                                    </span>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+</main>
+{% endblock %}

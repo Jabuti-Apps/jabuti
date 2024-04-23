@@ -1,4 +1,5 @@
 from django.db import models
+from autorizacao.models import Orgao
 
 class Veiculo(models.Model):
 
@@ -24,7 +25,7 @@ class Veiculo(models.Model):
     precisaDeManutencao = models.BooleanField(default=False)
     temSeguro  = models.BooleanField(default=None)
     alugado  = models.BooleanField(default=None)
-    #orgao int [ref: > orgao.id]
+    orgao = models.ForeignKey(Orgao, on_delete=models.DO_NOTHING, null=True, blank=True)
     ultimaLavagem = models.DateField(default=None, blank=True, null=True)
     criadoEm = models.DateTimeField(auto_now_add=True)
 

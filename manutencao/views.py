@@ -1,11 +1,12 @@
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from autorizacao.decorators import gestor_required
 from manutencao.models import Manutencao
 from veiculos.models import Veiculo
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def manutencao(request):
     manutencoes = Manutencao.objects.all()
     hoje = date.today() 
@@ -15,7 +16,7 @@ def manutencao(request):
     }
     return render(request, "manutencao.html", context)
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def criar_manutencao(request):
     veiculos_manutencao = Veiculo.objects.filter(precisaDeManutencao=True)
 
@@ -44,7 +45,7 @@ def criar_manutencao(request):
 
     return render(request, 'criar_manutencao.html', {"veiculos": veiculos_manutencao})
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def update_manutencao(request, manutencao_id):
     manutencao = get_object_or_404(Manutencao, id=manutencao_id)
 
@@ -65,7 +66,7 @@ def update_manutencao(request, manutencao_id):
 
     return render(request, 'update_manutencao.html', {"manutencao":manutencao})
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def deletar_manutencao(request, manutencao_id):
     manutencao = Manutencao.objects.get(id=manutencao_id)
     manutencao.delete()

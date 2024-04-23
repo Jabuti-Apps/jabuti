@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
+from autorizacao.decorators import gestor_required
 from veiculos.models import Veiculo
 from manutencao.models import Manutencao
+from autorizacao.models import Orgao
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def veiculos(request):
     veiculos = Veiculo.objects.all().order_by('id')
     # Configuração da paginação
@@ -16,7 +18,7 @@ def veiculos(request):
     
     return render(request,"index.html", {'page_obj': page_obj})
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def detalhe_veiculo(request, veiculo_id):
     car_obj = get_object_or_404(Veiculo, id=veiculo_id)
     manutencao_obj = Manutencao.objects.filter(veiculo=car_obj).order_by('-dataEntrada')
@@ -27,8 +29,14 @@ def detalhe_veiculo(request, veiculo_id):
     }
     return render(request, "detalhe_veiculo.html", context)
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def cadastrar_veiculo(request):
+    if request.method == 'GET':
+        opcoes_gasolina = Veiculo.OPCOES_GASOLINA
+        orgaos = Orgao.objects.all()
+        return render(request, 'cadastrar_veiculo.html', {'orgaos': orgaos, 'opcoes_gasolina': opcoes_gasolina})
+
+
     if request.method == 'POST':
         crv = request.POST.get('crv')
         marca = request.POST.get('marca')
@@ -41,6 +49,9 @@ def cadastrar_veiculo(request):
         quilometragem = request.POST.get('quilometragem')
         temSeguro = request.POST.get('temSeguro')
         alugado = request.POST.get('alugado')
+        orgao_id = request.POST.get('orgao')
+
+        orgao = Orgao.objects.get(pk=orgao_id)
 
         Veiculo.objects.create(
             crv=crv,
@@ -53,14 +64,15 @@ def cadastrar_veiculo(request):
             tipoDeCombustivel=tipoDeCombustivel,
             quilometragem=quilometragem,
             temSeguro=temSeguro,
-            alugado=alugado
+            alugado=alugado,
+            orgao=orgao,
         )
 
         return redirect('veiculos')
     
     return render(request, 'cadastrar_veiculo.html')
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def update_veiculo(request, veiculo_id):
     veiculo = get_object_or_404(Veiculo, id=veiculo_id)
     
@@ -83,13 +95,13 @@ def update_veiculo(request, veiculo_id):
 
     return render(request, 'update_veiculo.html', {"veiculo": veiculo})
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def deletar_veiculo(request, veiculo_id):
     veiculo = Veiculo.objects.get(id=veiculo_id)
     veiculo.delete()
     return redirect('veiculos')
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def solicitar_manutencao(request, veiculo_id):
     if request.method == 'POST':
         veiculo = Veiculo.objects.get(id=veiculo_id)
@@ -116,7 +128,7 @@ def solicitar_manutencao(request, veiculo_id):
 
         return redirect('detalhe_veiculo', veiculo_id=veiculo_id)
 
-@login_required(login_url='/autorizacao/')
+@gestor_required
 def criar_manutencao_veiculo(request, veiculo_id):
     if request.method == 'POST':
         tipo_manutencao = request.POST.get('tipo_manutencao')

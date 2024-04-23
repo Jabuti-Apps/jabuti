@@ -58,13 +58,22 @@
                                         Tipo de Combustivel:</label>
                                     <select id="tipoDeCombustivel" name="tipoDeCombustivel" 
                                     class="w-full h-12 px-2 py-2 text-gray-700 bg-gray-200 rounded">
-                                        <option value="Gasolina" {% if veiculo.tipoDeCombustivel == 'Gasolina' %} selected {% endif %}>Gasolina</option>
-                                        <option value="Gasolina/Alcool" {% if veiculo.tipoDeCombustivel == 'Gasolina/Alcool' %} selected {% endif %}>Gasolina/Alcool</option>
-                                        <option value="Diesel" {% if veiculo.tipoDeCombustivel == 'Diesel' %} selected {% endif %}>Diesel</option>
-                                        <option value="DieselS10" {% if veiculo.tipoDeCombustivel == 'DieselS10' %} selected {% endif %}>DieselS10</option>
-                                        <option value="Etanol" {% if veiculo.tipoDeCombustivel == 'Etanol' %} selected {% endif %}>Etanol</option>
+                                        {% for tipo in opcoes_gasolina %}
+                                            <option value="{{ tipo.0 }}">{{ tipo.1}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
+
+                                <div class="mt-2">
+                                    <label for="orgao" class="block text-sm text-gray-600">
+                                        Orgão/Secretaria:</label>
+                                    <select name="orgao" class="w-full h-12 px-2 py-2 text-gray-700 bg-gray-200 rounded form-select" id="orgao">
+                                        {% for i in orgaos %}
+                                            <option value="{{ i.id }}">{{ i.orgao }}</option>
+                                        {% endfor %}
+                                    </select>  
+                                </div>
+
                                 <div class="w-full inline-grid grid-cols-2 gap-x-4 mt-2 flex justify-center">
                                     <div class="mt-2">
                                         <label for="temSeguro" class="block text-sm text-gray-600">Tem Seguro:</label>
