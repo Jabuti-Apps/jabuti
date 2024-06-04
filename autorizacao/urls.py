@@ -10,4 +10,5 @@ urlpatterns = [
     path("calendar/", views.calendar, name="calendar"),
     path("funcionarios/", views.funcionarios, name="funcionarios"),
     path("gerenciar_funcionario/<int:funcionario_id>/", views.gerenciar_funcionario, name="gerenciar_funcionario"),
+    path("dashboard/", views.dashboard, name="dashboard"),
 ]

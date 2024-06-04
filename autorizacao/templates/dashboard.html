@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+        
+        <main class="w-full flex-grow p-6">
+                <h1 class="text-3xl text-black pb-6">Dashboard</h1>
+
+                <div class="flex flex-wrap mt-6">
+                    <div class="w-full lg:w-1/2 pr-0 lg:pr-2">
+                        <p class="text-xl pb-3 flex items-center">
+                            <i class="fas fa-plus mr-3"></i> Quantidades
+                        </p>
+                        <!-- Crie um elemento <canvas> para o gráfico -->
+                        <div class="p-6 bg-white">
+                            <canvas id="myChart" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+
+                    <script>
+                        // Dados das quantidades (substitua pelos valores reais)
+                        const quantidadeVeiculos = {{ quantidade_veiculos|safe }};
+                        const quantidadeAgendamentos = {{ quantidade_agendamentos|safe }};
+                        const quantidadeManutencoes = {{ quantidade_manutencoes|safe }};
+                        const quantidadeAbastecimentos = {{ quantidade_abastecimentos|safe }};
+
+                        // Crie o gráfico
+                        const ctx = document.getElementById('myChart').getContext('2d');
+                        const myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Veículos', 'Agendamentos', 'Manutenções', 'Abastecimentos'],
+                                datasets: [{
+                                    label: '{{orgao}}',
+                                    data: [quantidadeVeiculos, quantidadeAgendamentos, quantidadeManutencoes, quantidadeAbastecimentos],
+                                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 255, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                                    borderColor: 'rgba(0,0,0,0.5)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+        </main>
+
+{%endblock%}

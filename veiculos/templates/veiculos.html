@@ -15,7 +15,6 @@
                         <table class="text-left w-full border-collapse">
                             <thead>
                                 <tr>
-                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">ID</th>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Marca/Modelo</th>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Cor</th>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Placa</th>
@@ -28,7 +27,6 @@
                                 <!-- Iterar sobre os veículos na página atual -->
                                 {% for veiculo in page_obj %}
                                 <tr class="hover:bg-grey-lighter">
-                                    <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.id }}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.marca }} {{ veiculo.modelo }}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.cor }}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ veiculo.placa }}</td>

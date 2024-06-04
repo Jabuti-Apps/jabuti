@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from autorizacao.decorators import gestor_required
 from .models import CustomUser, Orgao
+from veiculos.models import Veiculo
+from manutencao.models import Manutencao
+from agendamento.models import Agendamento
+from abastecimento.models import Abastecer
 from django.core.paginator import Paginator
+from django.db.models import Count
 
 def home(request):
     return render(request, 'home.html')
@@ -11,6 +17,7 @@ def home(request):
 def signup(request):
     return render(request, "signup.html")
 
+@login_required
 def logout_user(request):
     logout(request)
     return redirect("/")
@@ -57,7 +64,6 @@ def submit_login(request):
         password = request.POST.get('password') 
 
         user = authenticate(username=username, password=password)
-        print(user)
 
         if user is not None:
             login(request, user)
@@ -94,3 +100,24 @@ def gerenciar_funcionario(request, funcionario_id):
             funcionario.save()
 
         return redirect('funcionarios') 
+    
+def dashboard(request):
+    orgao=request.user.orgao
+    veiculos = Veiculo.objects.filter(orgao=request.user.orgao)
+    agendamentos = Agendamento.objects.filter(veiculo__orgao = orgao)
+    manutencoes = Manutencao.objects.filter(veiculo__orgao = orgao)
+    abastecimentos = Abastecer.objects.filter(veiculo__orgao = orgao)
+
+
+    quantidade_veiculos = [veiculos.count()]
+    quantidade_agendamentos = [agendamentos.count()]
+    quantidade_manutencoes = [manutencoes.count()]
+    quantidade_abastecimentos = [abastecimentos.count()]
+
+    return render(request, 'dashboard.html', {
+        'quantidade_veiculos': quantidade_veiculos,
+        'quantidade_agendamentos': quantidade_agendamentos,
+        'quantidade_manutencoes': quantidade_manutencoes,
+        'quantidade_abastecimentos': quantidade_abastecimentos,
+        'orgao':orgao,
+    })

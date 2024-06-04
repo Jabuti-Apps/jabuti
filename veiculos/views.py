@@ -10,13 +10,13 @@ from django.contrib.auth.decorators import login_required
 
 @gestor_required
 def veiculos(request):
-    veiculos = Veiculo.objects.all().order_by('id')
+    veiculos = Veiculo.objects.filter(orgao=request.user.orgao).order_by('id')
     # Configuração da paginação
     paginator = Paginator(veiculos, 5)  # Exibir 5 veículos por página
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
-    return render(request,"index.html", {'page_obj': page_obj})
+    return render(request,"veiculos.html", {'page_obj': page_obj})
 
 @gestor_required
 def detalhe_veiculo(request, veiculo_id):

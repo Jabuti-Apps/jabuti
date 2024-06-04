@@ -29,6 +29,7 @@
             top: -10px;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 font-family-karla flex">
     <!-- Aside -->
@@ -38,7 +39,7 @@
             <img src="\static\LogoJabutiMini-removebg-preview 1.png" alt="Logo GeFrota" class="logo-img">
         </div>
         <nav class="text-white text-base font-semibold pt-3">
-            <a href="" class="flex items-center text-white hover:opacity-100 py-4 pl-6 nav-item">
+            <a href="{% url 'dashboard' %}" class="flex items-center text-white hover:opacity-100 py-4 pl-6 nav-item {% if request.path == '/autorizacao/dashboard/' %}active-nav-link{% endif %}">
                 <i class="fas fa-tachometer-alt mr-3"></i>
                 Dashboard
             </a>
@@ -164,6 +165,5 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
         <!-- Font Awesome -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
-
     </body>
 </html>

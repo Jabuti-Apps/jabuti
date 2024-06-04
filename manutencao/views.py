@@ -1,14 +1,15 @@
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.messages import constants
 from django.contrib import messages
 from autorizacao.decorators import gestor_required
 from manutencao.models import Manutencao
 from veiculos.models import Veiculo
-from django.contrib.auth.decorators import login_required
 
 @gestor_required
 def manutencao(request):
-    manutencoes = Manutencao.objects.all()
+    orgao=request.user.orgao
+    manutencoes = Manutencao.objects.filter(veiculo__orgao = orgao)
     hoje = date.today() 
     context = {
         'manutencoes': manutencoes,
@@ -18,7 +19,7 @@ def manutencao(request):
 
 @gestor_required
 def criar_manutencao(request):
-    veiculos_manutencao = Veiculo.objects.filter(precisaDeManutencao=True)
+    veiculos_manutencao = Veiculo.objects.filter(precisaDeManutencao=True).filter(orgao=request.user.orgao)
 
     if request.method == 'POST':
         veiculo_id = request.POST.get('veiculo')
@@ -38,7 +39,7 @@ def criar_manutencao(request):
         )
 
         # Adiciona uma mensagem de sucesso
-        messages.success(request, 'Manutenção criada com sucesso.')
+        messages.add_message(request, constants.SUCCESS, 'Manutenção cadastrada com sucesso.')
 
         # Redireciona de volta para a página de criação de manutenção
         return redirect('manutencao')

@@ -2,20 +2,29 @@
 
 {% block content %}
     
-        
             <main class="w-full flex-grow p-6">
                 <h1 class="text-3xl text-black pb-6">Manutenções</h1>
                 <a href="{% url 'criar_manutencao' %}" class="flex items-center justify-center w-64 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg  hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                     <i class="fas fa-plus mr-3"></i>   
                     <span>Criar Manutenção</span>
                 </a>
+                <br>
+                {% if messages %}
+                    <br>
+                    {% for message in messages %}
+                        <section class="alert {{message.tags}}">
+                            {{message}}
+                        </section>
+                    {% endfor %}
+                {% endif %}
+                <br>
+                <hr>
                 
                 <div class="w-full mt-12"> 
                     <div class="bg-white overflow-auto">
                         <table class="text-left w-full border-collapse">
                             <thead>
                                 <tr>
-                                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">ID</th>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Veiculo</th>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Tipo Manutencao</th>
                                     <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Quilometragem</th>
@@ -28,7 +37,6 @@
                                 <!-- Iterar sobre os veículos na página atual -->
                                 {% for manutencao in manutencoes %}
                                 <tr class="hover:bg-grey-lighter">
-                                    <td class="py-4 px-6 border-b border-grey-light">{{ manutencao.id }}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ manutencao.veiculo.placa }}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ manutencao.tipoManutencao }} {% if manutencao.outraOpcao %}/ {{manutencao.outraOpcao}}{% endif %}</td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ manutencao.quilometragemDoVeiculo }}</td>
