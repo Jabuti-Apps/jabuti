@@ -29,7 +29,6 @@
             top: -10px;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 font-family-karla flex">
     <!-- Aside -->
@@ -39,7 +38,7 @@
             <img src="\static\LogoJabutiMini-removebg-preview 1.png" alt="Logo GeFrota" class="logo-img">
         </div>
         <nav class="text-white text-base font-semibold pt-3">
-            <a href="{% url 'dashboard' %}" class="flex items-center text-white hover:opacity-100 py-4 pl-6 nav-item {% if request.path == '/autorizacao/dashboard/' %}active-nav-link{% endif %}">
+            <a href="" class="flex items-center text-white hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-tachometer-alt mr-3"></i>
                 Dashboard
             </a>
@@ -53,7 +52,7 @@
             </a>
             <a href="{% url 'calendar' %}" class="flex items-center text-white hover:opacity-100 py-4 pl-6 nav-item {% if request.path == '/autorizacao/calendar/' %}active-nav-link{% endif %}">
                 <i class="fas fa-calendar mr-3"></i>
-                Calendar
+                Calendario
             </a>
             <a href="{% url 'veiculos' %}" class="flex items-center text-white hover:opacity-100 py-4 pl-6 nav-item {% if request.path == '/veiculos/' %}active-nav-link{% endif %}">
                 <i class="fas fa-car mr-3"></i>
@@ -77,9 +76,8 @@
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         <!-- Desktop Header -->
         <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
-            <div class="w-1/2"></div>       
+            <div class="w-1/2"></div>
             <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
-                <p class="px-6 py-2" >{{request.user.orgao}}</p>
                 <button @click="isOpen = !isOpen" class="relative z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
                     {% if request.user.is_authenticated %}
                         <img src="{{request.user.get_foto_perfil}} " alt="Foto de Perfil">
@@ -88,9 +86,9 @@
 
                 <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
                 <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
-                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
-                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
-                    <a href="{% url 'logout' %}" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Conta</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Suporte</a>
+                    <a href="{% url 'logout' %}" class="block px-4 py-2 account-link hover:text-white">Sair</a>
                 </div>
             </div>
         </header>
@@ -111,41 +109,35 @@
                     <i class="fas fa-tachometer-alt mr-3"></i>
                     Dashboard
                 </a>
-                <a href="blank.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-sticky-note mr-3"></i>
-                    Blank Page
-                </a>
-                <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-table mr-3"></i>
-                    Tables
-                </a>
-                <a href="forms.html" class="flex items-center text-white py-2 pl-4 nav-item">
-                    <i class="fas fa-align-left mr-3"></i>
-                    Forms
-                </a>
-                <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-tablet-alt mr-3"></i>
-                    Tabbed Content
-                </a>
-                <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-calendar mr-3"></i>
-                    Calendar
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-cogs mr-3"></i>
-                    Support
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <a href="{% url 'funcionarios' %}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item {% if request.path == '/funcionarios/' %}active-nav-link{% endif %}">
                     <i class="fas fa-user mr-3"></i>
-                    My Account
+                    Funcionarios
                 </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-sign-out-alt mr-3"></i>
-                    Sign Out
+                <a href="{% url 'abastecer'%}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item {% if request.path == '/abastecimento/' %}active-nav-link{% endif %}">
+                    <i class="fa-solid fa-gas-pump mr-3"></i>
+                    Abastecimento
                 </a>
-                <button class="w-full bg-white cta-btn font-semibold py-2 mt-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                    <i class="fas fa-arrow-circle-up mr-3"></i> Upgrade to Pro!
-                </button>
+                <a href="{% url 'calendar' %}" class="flex items-center text-white py-2 pl-4 nav-item {% if request.path == '/autorizacao/calendar/' %}active-nav-link{% endif %}">
+                    <i class="fas fa-calendar mr-3"></i>
+                    Calendario
+                </a>
+                <a href="{% url 'veiculos' %}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item {% if request.path == '/veiculos/' %}active-nav-link{% endif %}">
+                    <i class="fas fa-car mr-3"></i>
+                    Veiculos
+                </a>
+                <a href="{% url 'agendamentos'%}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item {% if request.path == '/agendamento/' %}active-nav-link{% endif %}">
+                    <i class="fa-solid fa-location-dot mr-3"></i>
+                    Agendamento
+                </a>
+                <a href="{% url 'manutencao' %}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item {% if request.path == '/manutencao/' %}active-nav-link{% endif %}">
+                    <i class="fas fa-wrench mr-3"></i>
+                    Manutenção
+                </a>
+                <a href="{% url 'logout' %}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-arrow-circle-left mr-3"></i>
+                    Sair
+                </a>
+    
             </nav>
             <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
                 <i class="fas fa-plus mr-3"></i> New Report
@@ -157,7 +149,7 @@
             {% block content %}
             {% endblock %}
             <footer class="w-full bg-white text-right p-4">
-                Built by <a target="_blank" href="https://github.com/Jabuti-Apps/jabuti" class="underline">Jabuti Apps</a>.
+                Feito por <a target="_blank" href="https://github.com/Jabuti-Apps/jabuti" class="underline">Jabuti Apps</a>.
             </footer>
         </div>   
         
@@ -166,5 +158,6 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
         <!-- Font Awesome -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+
     </body>
 </html>

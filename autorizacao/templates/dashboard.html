@@ -1,10 +1,67 @@
 {% extends "base.html" %}
 
 {% block content %}
-        
+
         <main class="w-full flex-grow p-6">
                 <h1 class="text-3xl text-black pb-6">Dashboard</h1>
+                
+                <!-- Tabela -->       
+            <div class="container mx-auto px-4 py-8">
+                <div class="mt-4">
+                <h1 class=" text-2xl font-bold mb-5">Veiculos</h1>
 
+                <table class="w-full rounded-lg ">
+                    <thead>
+                    <tr>
+                        <th class="text-center text-gray-500 p-2">Motorista</th>
+                        <th class="text-center text-gray-500 p-2">Carro</th>
+                        <th class="text-center text-gray-500 p-2">Situação</th>
+                        <th class="text-center text-gray-500 p-2">Horário</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr >
+                        <td class="text-left p-2"></td> <!-- motorista -->
+                        <td class="text-left p-2"></td> <!-- Veiculos -->
+                        <td class="text-left p-2"></td> <!-- situacao -->
+                        <td class="text-left p-2"></td> <!-- horario -->
+                    </tr>
+                    <tr>
+                        <td class="text-left p-2"></td>
+                        <td class="text-left p-2"></td>
+                        <td class="text-left p-2 "></td>
+                        <td class="text-left p-2"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left p-2"></td>
+                        <td class="text-left p-2"></td>
+                        <td class="text-left p-2 "></td>
+                        <td class="text-left p-2"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+
+<!-- card -->
+        <h2 class="text-2xl font-bold mt-16 " >Lembrets</h2>
+        <div class="lembrets grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 ">
+            <div class="p-4 rounded shadow">
+            <h2 class="text-xl font-bold mb-2"></h2> <!-- motorista ou Veiculos -->
+            <p class="text-red-500"></p> <!-- mensagem -->
+            </div>
+            <div class="p-4 rounded shadow">
+            <h2 class="text-xl font-bold mb-2"></h2>
+            <p class="text-red-500"></p>
+            </div>
+            <div class=" p-4 rounded shadow">
+            <h2 class="text-xl font-bold mb-2"></h2> 
+            <p class="text-red-500"></p>
+            </div>
+        </div>
+
+        </div>
+
+<!-- grafico -->
                 <div class="flex flex-wrap mt-6">
                     <div class="w-full lg:w-1/2 pr-0 lg:pr-2">
                         <p class="text-xl pb-3 flex items-center">
@@ -16,7 +73,82 @@
                         </div>
                     </div>
 
+                    
                     <script>
+                        // Atualizar dados
+                        function atualizarDados() {
+                            const dados = {
+                                veiculos: [
+                                {
+                                    motorista: "lucas",
+                                    carro: "001",
+                                    situacao: "OK",
+                                    horario: "09:00h às 22:00h"
+                                },
+                                {
+                                    motorista: "Pedro",
+                                    carro: "002",
+                                    situacao: "OK",
+                                    horario: "09:00h às 22:00h"
+                                },
+                                {
+                                    motorista: "Marcos",
+                                    carro: "003",
+                                    situacao: "Pedencia",
+                                    horario: "09:00h às 22:00h"
+                                }
+                                ],
+                                lembretes: [
+                                    {
+                                    motorista: "Veiculo 01 Honda <br> Em manutençao",
+                                    mensagem: "Em manutenção entre 12/01 a 14/01."
+                                    },
+
+                                    { 
+                                    motorista: "Solicitação de abastecimento por Motorista 01",
+                                    mensagem: "Justificativa: transporte de materiais para a sede. "
+                                    },
+                                    {
+                                    veiculo: "Veiculo 02 Civic <br> liberado da manutenção",
+                                    mensagem: "Buscar veiculo no local combinado antes das 18h do dia 12/03"
+                                    }
+                                ]
+                            };
+
+                            //  tabela de veículos
+                            const tabelaVeiculos = document.querySelector('table tbody');
+                            tabelaVeiculos.innerHTML = ''; // Limpar tabela antes de adicionar novos dados
+                            for (const veiculo of dados.veiculos) {
+                                const linha = `
+                                <tr>
+                                    <td class="border-b-2 border-gray-200 text-center p-2">${veiculo.motorista}</td>
+                                    <td class="border-b-2 border-gray-200 text-center p-2">${veiculo.carro}</td>
+                                    <td class="border-b-2 border-gray-200 text-center p-2 text-${veiculo.situacao === 'OK' ? 'green-600' : 'red-600'}">${veiculo.situacao}</td>
+                                    <td class="border-b-2 border-gray-200 text-center p-2">${veiculo.horario}</td>
+                                </tr>
+                                `;
+                                tabelaVeiculos.innerHTML += linha;
+                            }
+
+                            //  lembretes
+                            const lembretesContainer = document.querySelector('.lembrets');
+                            lembretesContainer.innerHTML = ''; // Limpar lembretes antes de adicionar novos
+                            for (const lembrete of dados.lembretes) {
+                                const lembreteHTML = `
+                                <div class="transition ease-in-out delay-150 bg-gray-200 hover:-translate-y-1 hover:scale-200 hover:bg-gray-300 duration-300   rounded-lg p-4 rounded-md shadow-lg ">
+                                <h2 class="text-xl font-bold mb-2">${lembrete.motorista ? `<p>${lembrete.motorista}</p>` : `<p>${lembrete.veiculo}</p>`}</h2>
+                                <p class="text-xl text-center text-red-600">${lembrete.mensagem}</p>
+                                </div>
+                                
+                                `;
+                                lembretesContainer.innerHTML += lembreteHTML;
+                            }
+
+                            }
+                            setInterval(atualizarDados, 5000);
+                            window.onload = atualizarDados;
+                        // fim 
+
                         // Dados das quantidades (substitua pelos valores reais)
                         const quantidadeVeiculos = {{ quantidade_veiculos|safe }};
                         const quantidadeAgendamentos = {{ quantidade_agendamentos|safe }};
