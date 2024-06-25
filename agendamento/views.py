@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 
 
 from .models import Agendamento
@@ -101,3 +101,11 @@ def finalizar_agendamento(request, agendamento_id):
             }
             
         )
+
+def detalhe_agendamento(request, agendamento_id):
+    agendamento_obj = get_object_or_404(Agendamento, id=agendamento_id)
+
+    context = {
+        "agendamento": agendamento_obj
+    }
+    return render(request, "detalhe_agendamento.html", context)
