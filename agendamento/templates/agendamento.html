@@ -24,11 +24,11 @@
                                 <div class="w-full inline-grid grid-cols-2 gap-x-4 mt-2">
                                     <div>
                                         <label class="block text-sm text-gray-600">Origem:</label>
-                                        <input type="text" class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" placeholder="origem" name="origem">
+                                        <input id="Origem" type="text" class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" placeholder="origem" name="origem">
                                     </div>
                                     <div>
                                         <label class="block text-sm text-gray-600">Destino:</label>
-                                        <input type="text" class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" placeholder="destino" name="destino">
+                                        <input id="Destino" type="text" class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" placeholder="destino" name="destino">
                                     </div>
                                 </div>                                                              
 
@@ -52,4 +52,26 @@
                     
                 </div>
             </main>
+
+            <script>
+                let autocompleteOrigem;
+                let autocompleteDestino;
+        
+                function initAutocomplete() {
+                    // Initialize the Autocomplete object for the 'Origem' field
+                    autocompleteOrigem = new google.maps.places.Autocomplete(document.getElementById('Origem'), {
+                        types: ['establishment'],
+                        componentRestrictions: { 'country': ['BR'] },
+                        fields: ['place_id', 'geometry']
+                    });
+        
+                    // Initialize the Autocomplete object for the 'Destino' field
+                    autocompleteDestino = new google.maps.places.Autocomplete(document.getElementById('Destino'), {
+                        types: ['establishment'],
+                        componentRestrictions: { 'country': ['BR'] },
+                        fields: ['place_id', 'geometry']
+                    });
+                }
+            </script>
+
 {% endblock %}
