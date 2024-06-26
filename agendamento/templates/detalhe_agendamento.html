@@ -12,38 +12,46 @@
                     </h4>
                 </div> 
                 <div class="grid grid-cols-1 gap-4 px-2 ">
-
                     <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                     <p class="text-sm text-gray-600">Origem:</p>
-                    
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ agendamento.Origem }}
+                    </p>
                     </div>
 
                     <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                     <p class="text-sm text-gray-600">Destino:</p>
-                    
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ agendamento.Destino }}
+                    </p>
                     </div>
 
                     <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                     <p class="text-sm text-gray-600">Veiculo: </p>
-                    
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ agendamento.veiculo.marca }} {{ agendamento.veiculo.modelo }}
+                    </p>
                     </div>
 
                     <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                     <p class="text-sm text-gray-600">Horario de Entrada:</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{agendamento.HorariodeEntrada}}
+                    </p>
                     </div>
-
                     <div class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-                        <p class="text-sm text-gray-600">Tempo da Rota:</p>
-                        </div>
+                        <p class="text-sm text-gray-600">Cálculo do Trajeto:</p>
+                        <p id="output" class="text-base font-medium text-navy-700 dark:text-white"></p>
+                    </div>
                 
                 </div>
-                
             </div>
-            <div id="map" style="height: 500px; width: 50%;"></div>
+            <div id="map" style="height: 600px; width: 70%;"></div>
                 <div>
                 <p id="output"></p>
                 </div>
         </div>
+        
 </main>
 
 <script>
@@ -53,22 +61,20 @@
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 2.821345, lng: -60.673131}, // Centro do mapa em São Paulo, Brasil
+            center: {lat: 2.821345, lng: -60.673131}, // Centro do mapa
             zoom: 8
         });
 
         directionsService = new google.maps.DirectionsService();
         directionsRenderer = new google.maps.DirectionsRenderer();
         directionsRenderer.setMap(map);
-        initAutocomplete();
+
+        calculateRoute();
     }
 
     function calculateRoute() {
-        const originPlace = autocompleteOrigem.getPlace();
-        const destinationPlace = autocompleteDestino.getPlace();
-
-        const origin = originPlace.geometry.location;
-        const destination = destinationPlace.geometry.location;
+        const origin = '{{ agendamento.Origem }}';
+        const destination = '{{ agendamento.Destino }}';
 
         const request = {
             origin: origin,
@@ -88,7 +94,6 @@
         });
     }
 
-    // Carregar o mapa após o carregamento da página
     google.maps.event.addDomListener(window, 'load', initMap);
 </script>
 
