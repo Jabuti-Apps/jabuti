@@ -104,8 +104,10 @@ def finalizar_agendamento(request, agendamento_id):
 
 def detalhe_agendamento(request, agendamento_id):
     agendamento_obj = get_object_or_404(Agendamento, id=agendamento_id)
+    veiculo = Veiculo.objects.all()
 
     context = {
-        "agendamento": agendamento_obj
+        "agendamento": agendamento_obj, 
+        "veiculos": veiculo,
     }
     return render(request, "detalhe_agendamento.html", context)
