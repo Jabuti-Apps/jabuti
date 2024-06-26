@@ -3,8 +3,8 @@ from django.db import models
 class Agendamento(models.Model):
 
     veiculo = models.ForeignKey('veiculos.Veiculo', on_delete=models.DO_NOTHING, null = False, blank = False )
-    Origem = models.CharField(max_length=50, null = False, blank = False)
-    Destino = models.CharField(max_length=50, null = False, blank = False)
+    Origem = models.CharField(max_length=200, null = False, blank = False)
+    Destino = models.CharField(max_length=200, null = False, blank = False)
     HorariodeEntrada = models.DateTimeField(null= False, blank = False, default="")
     HorariodeSaida = models.DateTimeField(null= True, blank = True)
     quilometragemFinal = models.IntegerField(null= True, blank = True)
