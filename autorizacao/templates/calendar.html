@@ -4,7 +4,7 @@
     
             <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
                 <main class="w-full flex-grow p-6">
-                    <h1 class="text-3xl text-black pb-6">Calendar</h1>
+                    <h1 class="text-3xl text-black pb-6">Calendario</h1>
 
                     <div class="w-full">
                         <!-- source: https://tailwindcomponents.com/component/calendar-ui-with-tailwindcss-and-alpinejs -->
@@ -103,20 +103,20 @@
 
                                         <div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8">
                                             
-                                            <h2 class="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">Add Event Details</h2>
+                                            <h2 class="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">Add Detalhes do evento</h2>
                                         
                                             <div class="mb-4">
-                                                <label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Event title</label>
+                                                <label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Titulo do evento</label>
                                                 <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" x-model="event_title">
                                             </div>
 
                                             <div class="mb-4">
-                                                <label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Event date</label>
+                                                <label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Data do Evento</label>
                                                 <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" x-model="event_date" readonly>
                                             </div>
 
                                             <div class="inline-block w-64 mb-4">
-                                                <label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Select a theme</label>
+                                                <label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">selecionar tema</label>
                                                 <div class="relative">
                                                     <select @change="event_theme = $event.target.value;" x-model="event_theme" class="block appearance-none w-full bg-gray-200 border-2 border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-blue-500 text-gray-700">
                                                             <template x-for="(theme, index) in themes">
@@ -132,10 +132,10 @@
                         
                                             <div class="mt-8 text-right">
                                                 <button type="button" class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-lg shadow-sm mr-2" @click="openEventModal = !openEventModal">
-                                                    Cancel
+                                                    Cancelar
                                                 </button>	
                                                 <button type="button" class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 border border-gray-700 rounded-lg shadow-sm" @click="addEvent()">
-                                                    Save Event
+                                                    Salvar Evento
                                                 </button>	
                                             </div>
                                         </div>
@@ -156,8 +156,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 
         <script>
-            const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const MONTH_NAMES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            const DAYS = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'];
 
             function app() {
                 return {
@@ -165,25 +165,25 @@
                     year: '',
                     no_of_days: [],
                     blankdays: [],
-                    days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                    days: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
 
                     events: [
                         {
-                            event_date: new Date(2020, 3, 1),
-                            event_title: "April Fool's Day",
-                            event_theme: 'blue'
-                        },
-
-                        {
-                            event_date: new Date(2020, 3, 10),
-                            event_title: "Birthday",
+                            event_date: new Date(2024, 5, 22),
+                            event_title: "manutenção",
                             event_theme: 'red'
                         },
 
                         {
-                            event_date: new Date(2020, 3, 16),
-                            event_title: "Upcoming Event",
-                            event_theme: 'green'
+                            event_date: new Date(2024, 5, 29),
+                            event_title: "mecanico",
+                            event_theme: 'red'
+                        },
+
+                        {
+                            event_date: new Date(2024, 5, 4),
+                            event_title: "consulta",
+                            event_theme: 'red'
                         }
                     ],
                     event_title: '',
