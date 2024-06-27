@@ -1,0 +1,80 @@
+
+
+.descricao {
+    font-family: "Karla";
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 0 0.8rem 0.05rem #cad5dbcb;
+}
+.lista__botoes {
+    display: flex;
+    align-items: center;
+}
+
+.lista__titulo{
+    margin: 0 0 0 40px;
+}
+
+
+.botoes__lista {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 20px;
+    padding: 0 0.5em 0 9em;
+    align-items: center;
+}
+
+.botoes {
+    display: flex;
+    align-items: center;
+    background-color: #3B82F6;
+    border-radius: 0.5rem;;
+    padding: 1em;
+    margin: 0 1em 0 0;
+}
+
+.ancoras {
+    text-decoration: none;
+    color: #FFFFFF;
+    
+}
+
+.pencil {
+    color: #FFFFFF;
+    width: 1em;
+}
+
+.lista__agendamentos {
+    margin: 0;
+    padding: 0 40px 40px 40px;
+    display: grid;
+    columns: 1;
+    grid-gap: 0.5rem;
+}
+
+.lista__agendamentos--lista {
+    display: grid;
+    columns: 1;
+    grid-gap: 2rem;
+}
+
+.agendamentos {
+    text-decoration: none;
+    color: #70818A;
+    text-transform: uppercase;
+    border: solid 2px #cad5dbcb;
+    padding: 1rem;
+    border-radius: 0.3rem;
+}
+
+.botao__fechar {
+    display: flex;
+    margin: 0 0.5em 0 0;
+    float: right;
+    background-color: transparent;
+    border: none;
+}
+
+.imagem_x {
+    width: 1.5em;
+}
