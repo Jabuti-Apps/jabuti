@@ -44,6 +44,7 @@
                                     <td class="py-4 px-6 border-b border-grey-light">
                                         <a href="{% url 'deletar_agendamento' agendamento.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-red hover:bg-red-dark"><button>Excluir</button></a>
                                         <a href="{% url 'finalizar_agendamento' agendamento.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark"><button>Finalizar</button></a>
+                                        <a href="{% url 'detalhe_agendamento' agendamento.id %}" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark"><button>Detalhe</button></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
